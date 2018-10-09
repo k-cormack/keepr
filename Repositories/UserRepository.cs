@@ -66,8 +66,19 @@ namespace keepr.Repositories
             return user;
         }
 
-
         //Update   u
+
+        public User UpdateEmail(string id, string email)
+        {
+            var user = _db.Query<User>(@"
+            SELECT * FROM users WHERE id = @id
+            ", new { id }).FirstOrDefault();
+            if (user != null)
+            {
+                user.Hash = null;
+            }
+            // HAVE NO IDEA.......
+        }
         //CHANGE PASS u
         //DELETE   D
 
