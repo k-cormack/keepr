@@ -9,7 +9,7 @@ import Vault from './components/Vault.vue'
 // @ts-ignore
 import CreateVault from './components/CreateVault.vue'
 // @ts-ignore
-import BrowseVaults from './views/BrowseVaults.vue'
+import BrowseVaults from './views/MyVaults.vue'
 //@ts-ignore
 import CreateKeep from './components/CreateKeep.vue'
 // @ts-ignore

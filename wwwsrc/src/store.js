@@ -21,6 +21,7 @@ export default new Vuex.Store({
   state: {
     user: {},
     vaults: [],
+    myVaults: [],
   },
   mutations: {
     setUser(state, user) {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     setVaults(state, vaults) {
       state.vaults = vaults
     },
+    setMyVaults(state, vaults){
+      state.myVaults = vaults
+    }
   },
   actions: {
     register({ commit, dispatch }, newUser) {
@@ -61,17 +65,23 @@ export default new Vuex.Store({
           console.log('Login Failed')
         })
     },
+    logout({commit, dispatch}) {
+      auth.delete('logout')
+      .then(res=> [
+        router.push({ name: 'login'})
+      ])
+    },
     getVaults({ commit, dispatch}) {
-      api.get('browse')
+      api.get('vaults')
       .then(res=> {
         commit('setVaults', res.data)
         router.push({ name: 'browseVaults'})
       })
     },
-    getVaultsByUserId({commit, dispatch}, userId) {
-      api.get('vaults'+userId)
+    getMyVaults({commit, dispatch}, userId) {
+      api.get('vaults/'+ userId)
       .then(res=> {
-        commit('setVaults', res.data)
+        commit('setMyVaults', res.data)
       })
     },
     addVault({ commit, dispatch}, newVault) {

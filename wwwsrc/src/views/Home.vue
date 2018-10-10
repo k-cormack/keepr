@@ -1,10 +1,14 @@
 <template>
   <div>
-  
+    <!-- <Navbar></Navbar> -->
+    <MyVaults></MyVaults>
   </div>
 </template>
 
 <script>
+  import Navbar from '../components/Navbar.vue'
+  import MyVaults from '../views/MyVaults.vue'
+
   export default {
     name: "home",
     mounted() {
@@ -14,10 +18,14 @@
           name: "login"
         });
       }
+    },
+    components: {
+      // Navbar,
+      MyVaults
     }
   };
 </script>
 
 <style>
-  
+
 </style>

@@ -64,3 +64,7 @@
 -- SELECT * FROM vaultkeeps vk
 -- INNER JOIN keeps k ON k.id = vk.keepId 
 -- WHERE (vaultId = @vaultId) 
+
+-- DROP TABLE users;
+
+-- DELETE FROM vaults WHERE Id = 2;

@@ -27,9 +27,10 @@ namespace keepr.Controllers
     [HttpPost]
     public Vault Post([FromBody] Vault vault)
     {
+      vault.UserId = HttpContext.User.Identity.Name;
       if (ModelState.IsValid)
       {
-        vault = new Vault(vault.Name, vault.Description);
+        vault = new Vault(vault.Name, vault.Description, vault.UserId);
         return _repo.Create(vault);
       }
       throw new Exception("INVALID VAULT");

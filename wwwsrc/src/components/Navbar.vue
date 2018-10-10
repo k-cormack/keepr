@@ -12,14 +12,14 @@
                     <a href="#home" @click.prevent="createVault">CREATE
                     </a>
                     <a href="#news" @click.prevent="getVaults">BROWSE VAULTS</a>
-                    <a href="#contact">ACCOUNT</a>
+                    <a href="#contact" @click.prevent="logout">LOGOUT</a>
                 </div>
                 <div id="createModal" class="modal">
                     <div class="modal-content">
                         <span class="close">&times;</span>
                         <p>Create new Vault here</p>
                         <form @submit.prevent="addVault">
-                            <input type="text" placeholder="Name of Vault" v-model="newVault.title" required>
+                            <input type="text" placeholder="Name of Vault" v-model="newVault.name" required>
                             <input type="text" placeholder="Description" v-model="newVault.description">
                             <button type="submit">Create New Vault</button>
                         </form>
@@ -44,11 +44,14 @@
         data(){
             return {
                 newVault: {
-                    title: "",
+                    name: "",
                     description: "",
                 }
             };
         },
+        // components: {
+        //     Navbar,
+        // },
         mounted: function () {
             var prevScrollpos = window.pageYOffset;
             window.onscroll = function () {
@@ -62,6 +65,9 @@
             }
         },
         methods: {
+            logout() {
+                this.$store.dispatch('logout')
+            },
             getVaults() {
                 this.$store.dispatch('getVaults')
             },
