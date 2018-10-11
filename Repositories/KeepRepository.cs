@@ -41,13 +41,16 @@ namespace keepr.Repositories
             return keep;
         }
         // CREATE VAULTKEEPS ENTRY
-        public Keep AddVaultKeep(Keep vaultKeep)
+        public string AddVaultKeep(VaultKeep vaultKeep)
         {
-            _db.Execute(@"
+            int success = _db.Execute(@"
             INSERT INTO vaultkeeps (vaultId, keepId, userId)
             VALUES (@VaultId, @KeepId, @UserId)
-            ", new {vaultKeep});
-            return vaultKeep;
+            ", vaultKeep);
+            if(success == 1){
+            return "created vaultkeep";
+            }
+            return "Failed";
         }
         //UPDATE KEEP
         public Keep Update(Keep keep)

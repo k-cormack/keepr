@@ -40,16 +40,19 @@ namespace keepr.Controllers
         [HttpPost]
         public Keep Post([FromBody] Keep keep)
         {
+            keep.UserId = HttpContext.User.Identity.Name;
             if (ModelState.IsValid)
             {
-                keep = new Keep(keep.Name, keep.Description, keep.Img);
+                keep = new Keep(keep.Name, keep.Description, keep.Img, keep.UserId);
                 return _repo.Create(keep);
             }
             throw new Exception("INVALID KEEP");
         }
-        [HttpPost("vaultkeeps/")]
-        public Keep AddVaultKeep(Keep vaultKeep)
+
+        [HttpPost("vaultkeeps")]
+        public string AddVaultKeep([FromBody]VaultKeep vaultKeep)
         {
+            vaultKeep.UserId = HttpContext.User.Identity.Name;
             return _repo.AddVaultKeep(vaultKeep);
         }
 

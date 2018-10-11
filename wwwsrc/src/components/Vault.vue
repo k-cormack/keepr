@@ -11,9 +11,9 @@
             <button class="submit" type="submit">Create New Keep</button>
         </form>
         <div class="container">
-            <div class="row justify-content-center" v-for="keep in vaultKeeps" :keepData='keep' :key="vault._id">
+            <div class="row justify-content-center">
                 <div class="col-3">
-                    <Keep class="col-3" :to="{name: 'vault', params: {vaultId: vault.id}}"/>
+                    <Keep class="col-3" v-for="keep in vaultKeeps" :keepData='keep' :key="keep.id"/>
                 </div>
             </div>
         </div>
@@ -33,14 +33,13 @@
                     name: "",
                     description: "",
                     img: "",
-                    userId: this.$store.state.user.id,
                     vaultId: this.$route.params.vaultId
                 }
             }
         },
-        components: {
-            Navbar,
-            Keep,
+        mounted() {
+            this.$store.dispatch('getVault', this.$route.params.vaultId);
+            this.$store.dispatch('getVaultKeeps', this.$route.params.vaultId)
         },
         computed: {
             vault() {
@@ -50,15 +49,15 @@
                 return this.$store.state.vaultKeeps
             },
         },
-        mounted() {
-            this.$store.dispatch('getVault', this.$route.params.vaultId);
-            this.$store.dispatch('getVaultKeeps', this.$route.params.vaultId)
-        },
         methods: {
             addKeep() {
                 this.$store.dispatch('addKeep', this.newKeep);
                 // this.$store.dispatch('addKeeptoVault', this.$route.params.vaultId)
             }
+        },
+        components: {
+            Navbar,
+            Keep,
         },
     }
 </script>
