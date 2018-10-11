@@ -13,7 +13,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-3">
-                    <Keep class="col-3" v-for="keep in vaultKeeps" :keepData='keep' :key="keep.id"/>
+                    <Keep v-for="keep in vaultKeeps" :keepData='keep' :key="keep.id"/>
                 </div>
             </div>
         </div>

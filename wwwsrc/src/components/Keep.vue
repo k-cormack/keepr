@@ -1,8 +1,11 @@
 <template>
-    <div>
-        <h3>{{keepData.name}}</h3>
-        <h5>{{keepData.img}}</h5>
+    <div class="col-3">
+        <div class="card">
+            <img class="card-img-top img-responsive" :src="keepData.img" alt=""/>
+            <h3>{{keepData.name}}</h3>
+            <h5>{{keepData.img}}</h5>
 
+        </div>
     </div>
 </template>
 
@@ -35,5 +38,11 @@
         margin: 10px;
         padding-bottom: 10px;
         border-radius: 10px;
+    }
+
+    .card {
+        width: 20rem;
+        /* border: darkblue; */
+
     }
 </style>
