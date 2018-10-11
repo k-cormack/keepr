@@ -12,7 +12,6 @@ namespace keepr.Repositories
     {
 
         IDbConnection _db;
-
         public VaultRepository(IDbConnection db)
         {
             _db = db;

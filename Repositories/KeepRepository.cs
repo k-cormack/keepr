@@ -37,8 +37,12 @@ namespace keepr.Repositories
             VALUES (@Name, @Description, @Img);
             SELECT LAST_INSERT_ID();", keep
             );
-        keep.Id = id;
-        return keep;
+            keep.Id = id;
+            return keep;
+            // _db.Execute(@"
+            // INSERT INTO vaultkeeps (vaultId, keepId, userId)
+            // VALUES
+            // ", );
         }
         //UPDATE KEEP
         public Keep Update(Keep keep)
@@ -53,16 +57,17 @@ namespace keepr.Repositories
         public Keep Delete(Keep keep)
         {
             _db.Execute("DELETE FROM keeps WHERE id = @Id", keep);
-        return keep;
+            return keep;
         }
-
-        // public IEnumerable<Keep> GetKeepsByUserId(string id)
-        // {
-        //     return _db.Query<Keep>(@"
-        //     SELECT * FROM keeps WHERE 
-        //     ")
-        // }
+        //GET KEEPS BY VAULT ID
+        public IEnumerable<Keep> GetKeepsByVaultId(int vaultId)
+        {
+            return _db.Query<Keep>(@"
+            SELECT * FROM vaultkeeps vk
+            INNER JOIN keeps k ON k.id = vk.keepId 
+            WHERE (vaultId = @vaultId)  
+            ", vaultId);
+        }
 
     }
 }
-        

@@ -7,35 +7,41 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace keepr.Controllers
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class VaultsController : Controller
-  {
-    VaultRepository _repo;
-    public VaultsController(VaultRepository repo)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class VaultsController : Controller
     {
-      _repo = repo;
-    }
+        VaultRepository _repo;
+        public VaultsController(VaultRepository repo)
+        {
+            _repo = repo;
+        }
 
-    [HttpGet]
-    public IEnumerable<Vault> Get()
-    {
-      return _repo.GetAll();
-    }
+        [HttpGet]
+        public IEnumerable<Vault> Get()
+        {
+            return _repo.GetAll();
+        }
 
-    [Authorize]
-    [HttpPost]
-    public Vault Post([FromBody] Vault vault)
-    {
-      vault.UserId = HttpContext.User.Identity.Name;
-      if (ModelState.IsValid)
-      {
-        vault = new Vault(vault.Name, vault.Description, vault.UserId);
-        return _repo.Create(vault);
-      }
-      throw new Exception("INVALID VAULT");
-    }
+        [HttpGet("{vaultId}")]
+        public Vault GetVaultById(int vaultId)
+        {
+            return _repo.GetById(vaultId);
+        }
 
-  }
+        [Authorize]
+        [HttpPost]
+        public Vault Post([FromBody] Vault vault)
+        {
+            vault.UserId = HttpContext.User.Identity.Name;
+            if (ModelState.IsValid)
+            {
+                vault = new Vault(vault.Name, vault.Description, vault.UserId);
+                return _repo.Create(vault);
+            }
+            throw new Exception("INVALID VAULT");
+        }
+
+    }
 
 }

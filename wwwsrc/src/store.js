@@ -22,16 +22,24 @@ export default new Vuex.Store({
     user: {},
     vaults: [],
     myVaults: [],
+    activeVault: {},
+    vaultKeeps: [],
   },
   mutations: {
     setUser(state, user) {
       state.user = user
     },
-    setVaults(state, vaults) {
-      state.vaults = vaults
+    setVaults(state, data) {
+      state.vaults = data
     },
-    setMyVaults(state, vaults){
-      state.myVaults = vaults
+    setMyVaults(state, data){
+      state.myVaults = data
+    },
+    setVault(state, data) {
+      state.activeVault = data
+    },
+    setVaultKeeps(state, keeps) {
+      state.vaultKeeps = keeps
     }
   },
   actions: {
@@ -65,31 +73,49 @@ export default new Vuex.Store({
           console.log('Login Failed')
         })
     },
-    logout({commit, dispatch}) {
+    logout({ commit, dispatch }) {
       auth.delete('logout')
       .then(res=> [
         router.push({ name: 'login'})
       ])
     },
-    getVaults({ commit, dispatch}) {
+    getVaults({ commit, dispatch }) {
       api.get('vaults')
       .then(res=> {
         commit('setVaults', res.data)
         router.push({ name: 'browseVaults'})
       })
     },
-    getMyVaults({commit, dispatch}, userId) {
-      api.get('vaults/'+ userId)
+    getMyVaults({ commit, dispatch }) {
+      api.get('vaults')
       .then(res=> {
         commit('setMyVaults', res.data)
       })
     },
-    addVault({ commit, dispatch}, newVault) {
-      api.post('vaults', newVault)
+    getVault({ commit, dispatch }, vaultId) {
+      api.get('vaults/' + vaultId)
       .then(res=> {
-        dispatch('getVaultsByUserId')
+        commit('setVault', res.data)
       })
     },
+    addVault({ commit, dispatch }, newVault) {
+      api.post('vaults', newVault)
+      .then(res=> {
+        dispatch('getMyVaults')
+      })
+    },
+    getVaultKeeps({ commit, dispatch}, vaultId) {
+      api.get('vaultkeeps/' + vaultId)
+      .then(res=> {
+        commit('setVaultKeeps', res.data)
+      })
+    },
+    addKeep({ commit, dispatch }, newKeep) {
+      api.post('keeps', newKeep)
+      .then(res=> {
+        dispatch('getVaultKeeps')
+      })
+    }
 
   }
 })

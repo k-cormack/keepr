@@ -18,21 +18,15 @@
                     <div class="modal-content">
                         <span class="close">&times;</span>
                         <p>Create new Vault here</p>
-                        <form @submit.prevent="addVault">
+                        <form id="form" @submit.prevent="addVault">
                             <input type="text" placeholder="Name of Vault" v-model="newVault.name" required>
                             <input type="text" placeholder="Description" v-model="newVault.description">
-                            <button type="submit">Create New Vault</button>
+                            <button id="create-button" type="submit">Create New Vault</button>
                         </form>
 
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="row">
-                          <div class="col home">
-                            <h1>Welcome Home</h1>
-                          </div>
-                        </div> -->
         </div>
 
     </div>
@@ -41,7 +35,7 @@
 <script>
     export default {
         name: 'Navbar',
-        data(){
+        data() {
             return {
                 newVault: {
                     name: "",
@@ -69,24 +63,33 @@
                 this.$store.dispatch('logout')
             },
             getVaults() {
-                this.$store.dispatch('getVaults')
+                this.$store.dispatch('getMyVaults')
             },
             createVault() {
                 var modal = document.getElementById('createModal');
                 var span = document.getElementsByClassName("close")[0];
+                var button = document.getElementById('create-button');
                 modal.style.display = "block";
                 span.onclick = function () {
                     modal.style.display = "none";
+
                 };
                 window.onclick = function (event) {
                     if (event.target == modal) {
                         modal.style.display = "none";
                     }
-                }
+                };
             },
-            addVault(){
+            addVault() {
                 this.$store.dispatch("addVault", this.newVault);
-                this.addVault = { title: "", description: ""};
+                var form = document.getElementById("form");
+                var button = document.getElementById("create-button");
+                form.reset();
+                var modal = document.getElementById('createModal').style.display = "none";
+                this.addVault = {
+                    name: "",
+                    description: ""
+                };
             }
         }
     }

@@ -13,7 +13,7 @@ import BrowseVaults from './views/MyVaults.vue'
 //@ts-ignore
 import CreateKeep from './components/CreateKeep.vue'
 // @ts-ignore
-import SelectKeep from './components/SelectKeep.vue'
+import Keep from './components/Keep.vue'
 
 
 Vue.use(Router)
@@ -29,30 +29,30 @@ export default new Router({
       name: 'login',
       component: Login
     },
-    // {
-    //   path: '/vaults/:id',
-    //   name: 'vault',
-    //   component: Vault
-    // },
-    // {
-    //   path: '/vaults',
-    //   name: 'createVault',
-    //   component: CreateVault
-    // },
     {
       path: '/browse',
       name: 'browseVaults',
       component: BrowseVaults
     },
+    {
+      path: '/vaults/:vaultId',
+      name: 'vault',
+      component: Vault
+    },
+    {
+      path: '/vaultkeeps/:vaultId',
+      name: 'vaultKeeps',
+      component: Keep
+    },
+    // {
+    //   path: '/vaults',
+    //   name: 'createVault',
+    //   component: CreateVault
+    // },
     // {
     //   path: '/keeps',
     //   name: 'createKeep',
     //   component: CreateKeep
     // },
-    // {
-    //   path: '/keeps/:id',
-    //   name: 'selectKeep',
-    //   component: SelectKeep
-    // }
   ]
 })
