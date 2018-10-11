@@ -24,9 +24,16 @@ namespace keepr.Controllers
         }
 
         [HttpGet("{keepId}")]
-        public Keep GetKeepById(int keepId)
+        public Keep GetKeepsById(int keepId)
         {
             return _repo.GetById(keepId);
+        }
+        
+        //api/keep/vaultkeeps/someid
+        [HttpGet("vaultkeeps/{vaultId}")]
+        public IEnumerable<Keep> GetKeepsByVaultId(int vaultId) 
+        {
+            return _repo.GetKeepsByVaultId(vaultId);
         }
 
         [Authorize]
@@ -39,6 +46,11 @@ namespace keepr.Controllers
                 return _repo.Create(keep);
             }
             throw new Exception("INVALID KEEP");
+        }
+        [HttpPost("vaultkeeps/")]
+        public Keep AddVaultKeep(Keep vaultKeep)
+        {
+            return _repo.AddVaultKeep(vaultKeep);
         }
 
     }

@@ -65,6 +65,6 @@
 -- INNER JOIN keeps k ON k.id = vk.keepId 
 -- WHERE (vaultId = @vaultId) 
 
--- DROP TABLE users;
+-- DROP TABLE keeps;
 
--- DELETE FROM vaults WHERE Id = 2;
+-- DELETE FROM keeps WHERE Id = 4;

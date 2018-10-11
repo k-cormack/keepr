@@ -32,7 +32,9 @@
                 newKeep: {
                     name: "",
                     description: "",
-                    vaultId: this.$route.params.vaultId,
+                    img: "",
+                    userId: this.$store.state.user.id,
+                    vaultId: this.$route.params.vaultId
                 }
             }
         },
@@ -54,7 +56,8 @@
         },
         methods: {
             addKeep() {
-                this.$store.dispatch('addKeep', this.newKeep)
+                this.$store.dispatch('addKeep', this.newKeep);
+                // this.$store.dispatch('addKeeptoVault', this.$route.params.vaultId)
             }
         },
     }

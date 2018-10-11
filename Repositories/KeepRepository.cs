@@ -39,10 +39,15 @@ namespace keepr.Repositories
             );
             keep.Id = id;
             return keep;
-            // _db.Execute(@"
-            // INSERT INTO vaultkeeps (vaultId, keepId, userId)
-            // VALUES
-            // ", );
+        }
+        // CREATE VAULTKEEPS ENTRY
+        public Keep AddVaultKeep(Keep vaultKeep)
+        {
+            _db.Execute(@"
+            INSERT INTO vaultkeeps (vaultId, keepId, userId)
+            VALUES (@VaultId, @KeepId, @UserId)
+            ", new {vaultKeep});
+            return vaultKeep;
         }
         //UPDATE KEEP
         public Keep Update(Keep keep)
@@ -66,7 +71,7 @@ namespace keepr.Repositories
             SELECT * FROM vaultkeeps vk
             INNER JOIN keeps k ON k.id = vk.keepId 
             WHERE (vaultId = @vaultId)  
-            ", vaultId);
+            ", new {vaultId});
         }
 
     }
