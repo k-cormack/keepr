@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div class="row" id="navbar">
+        <div class="row" id="create-keep-bar">
+
             <div class="col-4 name-head">
                 KEEPR
             </div>
@@ -15,15 +16,19 @@
                 LOGOUT
             </div>
         </div>
-        <!-- <div class="row">
-            <form @submit.prevent="addKeep">
-                <input class="newKeep1" type="text" placeholder="New Keep Name" v-model="newKeep.name" required>
-                <input class="newKeep2" type="text" placeholder="Description" v-model="newKeep.description">
-                <input class="newKeep3" type="text" placeholder="Img Url" v-model="newKeep.img">
-                <button class="submit" type="submit">Create New Keep</button>
-            </form>
-        </div> -->
-        <div id="createModal" class="modal">
+
+        <div class="row keep-form">
+            <div class="col-12">
+                <form @submit.prevent="addKeep">
+                    <input class="newKeep1" type="text" placeholder="New Keep Name" v-model="newKeep.name" required>
+                    <input class="newKeep2" type="text" placeholder="Description" v-model="newKeep.description">
+                    <input class="newKeep3" type="text" placeholder="Img Url" v-model="newKeep.img">
+                    <button class="submit" type="submit">Create New Keep</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- <div id="createModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <p>Create new Vault here</p>
@@ -33,36 +38,39 @@
                     <button id="create-button" type="submit">Create New Vault</button>
                 </form>
             </div>
-        </div>
-    </div>
+        </div> -->
 </template>
 
 <script>
     export default {
-        name: 'Navbar',
+        name: 'CreateKeepBar',
         data() {
             return {
                 newVault: {
                     name: "",
                     description: "",
+                },
+                newKeep: {
+                    name: "",
+                    description: "",
+                    img: "",
+                    vaultId: this.$route.params.vaultId
                 }
             };
         },
-        // components: {
-        //     Navbar,
+
+        // mounted: function () {
+        //     var prevScrollpos = window.pageYOffset;
+        //     window.onscroll = function () {
+        //         var currentScrollPos = window.pageYOffset;
+        //         if (prevScrollpos > currentScrollPos) {
+        //             document.getElementById("create-keep-bar").style.top = "0";
+        //         } else {
+        //             document.getElementById("create-keep-bar").style.top = "-56px";
+        //         }
+        //         prevScrollpos = currentScrollPos;
+        //     }
         // },
-        mounted: function () {
-            var prevScrollpos = window.pageYOffset;
-            window.onscroll = function () {
-                var currentScrollPos = window.pageYOffset;
-                if (prevScrollpos > currentScrollPos) {
-                    document.getElementById("navbar").style.top = "0";
-                } else {
-                    document.getElementById("navbar").style.top = "-56px";
-                }
-                prevScrollpos = currentScrollPos;
-            }
-        },
         methods: {
             logout() {
                 this.$store.dispatch('logout')
@@ -95,13 +103,17 @@
                     name: "",
                     description: ""
                 };
+            },
+            addKeep() {
+                this.$store.dispatch('addKeep', this.newKeep);
+                // this.$store.dispatch('addKeeptoVault', this.$route.params.vaultId)
             }
         }
     }
 </script>
 
 <style scoped>
-    #navbar {
+    #create-keep-bar {
         background-color: rgb(78, 79, 156);
         color: white;
         text-shadow: 2px 2px black;
@@ -109,7 +121,7 @@
         position: fixed;
         top: 0;
         min-height: 56px;
-        max-height: 63px;
+        max-height: 100px;
         width: 100%;
         transition: top 0.3s;
     }
@@ -121,6 +133,7 @@
         font-size: 3vw !important;
         letter-spacing: 10px;
     }
+
     .name-head:hover {
         background-color: #333;
         color: white;
@@ -140,6 +153,11 @@
     .nav-buttons:hover {
         background-color: #333;
         color: white;
+    }
+
+    .keep-form {
+        display: flex;
+        justify-content: flex-end;
     }
 
 

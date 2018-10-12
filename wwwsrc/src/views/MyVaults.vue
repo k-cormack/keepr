@@ -1,13 +1,15 @@
 <template>
-    <div id="my-vaults flex col-12">
-        <navbar></navbar>
-        <div class="container">
-            <div class="row justify-content-center" v-for="vault in myVaults" :key="vault._id">
-                <div class="col-3">
-                    <router-link class="row justify-content-center" :to="{name: 'vault', params: {vaultId: vault.id}}">{{vault.name}}             {{vault.id}}</router-link>
-                </div>
+    <div id="vaults-row" class="row justify-content-center">
+        
+            <!-- <navbar></navbar> -->
+            <div id="my-vaults" v-for="vault in myVaults" :key="vault._id">
+                <router-link class="card" :to="{name: 'vault', params: {vaultId: vault.id}}">
+                    <img src="https://loremflickr.com/200/250/cars" alt="">
+                    <h3>{{vault.name}}</h3>
+                    <h5>{{vault.description}}</h5>
+                </router-link>
             </div>
-        </div>
+        
     </div>
 </template>
 
@@ -16,7 +18,7 @@
 
     export default {
         name: 'vaults',
-        data () {
+        data() {
             return {
                 // newVault : {
                 //     title: "",
@@ -27,7 +29,7 @@
         components: {
             Navbar,
         },
-        mounted(){
+        mounted() {
             this.$store.dispatch("getMyVaults");
         },
         computed: {
@@ -40,7 +42,15 @@
 </script>
 
 <style scoped>
- .my-vaults {
-     font-size: 2rem;
- }
+    #vaults-row {
+        margin-top: 60px;
+    }
+    a:hover {
+        text-decoration: none;
+        color: red;
+    }
+    img:hover {
+        transform: scale(1.05);
+    }
+    
 </style>

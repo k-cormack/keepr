@@ -1,22 +1,25 @@
 <template>
     <div class="vault">
-        <Navbar></Navbar>
-        <h1>{{vault.name}}</h1>
-        <h5>{{vault.description}}</h5>
-        <hr>
-        <form @submit.prevent="addKeep">
-            <input class="newKeep1" type="text" placeholder="New Keep Name" v-model="newKeep.name" required>
-            <input class="newKeep2" type="text" placeholder="Description" v-model="newKeep.description">
-            <input class="newKeep3" type="text" placeholder="Img Url" v-model="newKeep.img">
-            <button class="submit" type="submit">Create New Keep</button>
-        </form>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-3">
-                    <Keep v-for="keep in vaultKeeps" :keepData='keep' :key="keep.id"/>
-                </div>
-            </div>
+        <!-- <Navbar></Navbar> -->
+        <CreateKeepBar></CreateKeepBar>
+        <!-- <div id="keeps">
+            <h3>{{vault.name}}</h3>
+            <h5>{{vault.description}}</h5>
+            <hr>
+            <form @submit.prevent="addKeep">
+                <input class="newKeep1" type="text" placeholder="New Keep Name" v-model="newKeep.name" required>
+                <input class="newKeep2" type="text" placeholder="Description" v-model="newKeep.description">
+                <input class="newKeep3" type="text" placeholder="Img Url" v-model="newKeep.img">
+                <button class="submit" type="submit">Create New Keep</button>
+            </form>
+        </div> -->
+
+        <div id="keeps" class="row justify-content-center">
+
+            <Keep v-for="keep in vaultKeeps" :keepData='keep' :key="keep.id" />
+
         </div>
+
 
     </div>
 </template>
@@ -24,17 +27,18 @@
 <script>
     import Navbar from '@/components/Navbar.vue'
     import Keep from '@/components/Keep.vue'
+    import CreateKeepBar from '@/components/CreateKeepBar.vue'
 
     export default {
         name: "vault",
         data() {
             return {
-                newKeep: {
-                    name: "",
-                    description: "",
-                    img: "",
-                    vaultId: this.$route.params.vaultId
-                }
+                // newKeep: {
+                //     name: "",
+                //     description: "",
+                //     img: "",
+                //     vaultId: this.$route.params.vaultId
+                // }
             }
         },
         mounted() {
@@ -50,21 +54,25 @@
             },
         },
         methods: {
-            addKeep() {
-                this.$store.dispatch('addKeep', this.newKeep);
-                // this.$store.dispatch('addKeeptoVault', this.$route.params.vaultId)
-            }
+            // addKeep() {
+            //     this.$store.dispatch('addKeep', this.newKeep);
+            //     // this.$store.dispatch('addKeeptoVault', this.$route.params.vaultId)
+            // }
         },
         components: {
             Navbar,
             Keep,
+            CreateKeepBar,
         },
     }
 </script>
 
 <style scoped>
-    .newKeep1,
+    /* .newKeep1,
     .newKeep2 {
         margin-right: 5px
+    } */
+    #keeps {
+        margin-top: 120px;
     }
 </style>

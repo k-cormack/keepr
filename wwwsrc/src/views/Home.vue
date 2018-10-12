@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <Navbar></Navbar> -->
+    <navbar></navbar>
     <MyVaults></MyVaults>
   </div>
 </template>
@@ -20,7 +20,7 @@
       }
     },
     components: {
-      // Navbar,
+      Navbar,
       MyVaults
     }
   };

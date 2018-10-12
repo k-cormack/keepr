@@ -8,7 +8,7 @@ namespace keepr.Models
     {
         public int Id { get; set; }
         [Required]
-        [MinLength(5)]
+        [MinLength(3)]
         public string Name { get; set; }
 
         public string UserId { get; set; }

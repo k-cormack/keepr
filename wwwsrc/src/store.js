@@ -90,6 +90,7 @@ export default new Vuex.Store({
       api.get('vaults')
       .then(res=> {
         commit('setMyVaults', res.data)
+        router.push({ name: "home" })
       })
     },
     getVault({ commit, dispatch }, vaultId) {

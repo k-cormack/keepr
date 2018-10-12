@@ -11,7 +11,7 @@ import CreateVault from './components/CreateVault.vue'
 // @ts-ignore
 import BrowseVaults from './views/MyVaults.vue'
 //@ts-ignore
-import CreateKeep from './components/CreateKeep.vue'
+import CreateKeepBar from './components/CreateKeepBar.vue'
 // @ts-ignore
 import Keep from './components/Keep.vue'
 
