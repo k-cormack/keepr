@@ -6,8 +6,8 @@
                 KEEPR
             </div>
             <div class="col-2"></div>
-            <div class="col-2 nav-buttons" @click.prevent="createVault">
-                CREATE VAULT
+            <div class="col-2 nav-buttons" @click.prevent="keepModal">
+                CREATE KEEP
             </div>
             <div class="col-2 nav-buttons" @click.prevent="getVaults">
                 MY VAULTS
@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div class="row keep-form">
+        <!-- <div class="row keep-form">
             <div class="col-12">
                 <form @submit.prevent="addKeep">
                     <input class="newKeep1" type="text" placeholder="New Keep Name" v-model="newKeep.name" required>
@@ -26,19 +26,20 @@
                     <button class="submit" type="submit">Create New Keep</button>
                 </form>
             </div>
-        </div>
-    </div>
-    <!-- <div id="createModal" class="modal">
+        </div> -->
+        <div id="keepModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <p>Create new Vault here</p>
-                <form id="form" @submit.prevent="addVault">
-                    <input type="text" placeholder="Name of Vault" v-model="newVault.name" required>
-                    <input type="text" placeholder="Description" v-model="newVault.description">
-                    <button id="create-button" type="submit">Create New Vault</button>
+                <p>Create New Keep Here</p>
+                <form id="form" @submit.prevent="addKeep">
+                    <input type="text" placeholder="Name of Keep" v-model="newKeep.name" required>
+                    <input type="text" placeholder="Description" v-model="newKeep.description">
+                    <input type="text" placeholder="Image address" v-model="newKeep.img" required>
+                    <button id="create-button" type="submit">Create New Keep!</button>
                 </form>
             </div>
-        </div> -->
+        </div>
+    </div>
 </template>
 
 <script>
@@ -46,31 +47,18 @@
         name: 'CreateKeepBar',
         data() {
             return {
-                newVault: {
-                    name: "",
-                    description: "",
-                },
                 newKeep: {
                     name: "",
                     description: "",
                     img: "",
                     vaultId: this.$route.params.vaultId
-                }
+                },
             };
         },
 
-        // mounted: function () {
-        //     var prevScrollpos = window.pageYOffset;
-        //     window.onscroll = function () {
-        //         var currentScrollPos = window.pageYOffset;
-        //         if (prevScrollpos > currentScrollPos) {
-        //             document.getElementById("create-keep-bar").style.top = "0";
-        //         } else {
-        //             document.getElementById("create-keep-bar").style.top = "-56px";
-        //         }
-        //         prevScrollpos = currentScrollPos;
-        //     }
-        // },
+        mounted() {
+            this.scroll();
+        },
         methods: {
             logout() {
                 this.$store.dispatch('logout')
@@ -78,8 +66,8 @@
             getVaults() {
                 this.$store.dispatch('getMyVaults')
             },
-            createVault() {
-                var modal = document.getElementById('createModal');
+            keepModal() {
+                var modal = document.getElementById('keepModal');
                 var span = document.getElementsByClassName("close")[0];
                 var button = document.getElementById('create-button');
                 modal.style.display = "block";
@@ -92,22 +80,37 @@
                         modal.style.display = "none";
                     }
                 };
+                button.onclick = function(){
+                    modal.style.display = "none";
+                }
             },
-            addVault() {
-                this.$store.dispatch("addVault", this.newVault);
-                var form = document.getElementById("form");
-                var button = document.getElementById("create-button");
-                form.reset();
-                var modal = document.getElementById('createModal').style.display = "none";
-                this.addVault = {
-                    name: "",
-                    description: ""
-                };
-            },
+            // addVault() {
+            //     this.$store.dispatch("addVault", this.newVault);
+            //     var form = document.getElementById("form");
+            //     var button = document.getElementById("create-button");
+            //     form.reset();
+            //     var modal = document.getElementById('createModal').style.display = "none";
+            //     this.addVault = {
+            //         name: "",
+            //         description: ""
+            //     };
+            // },
             addKeep() {
                 this.$store.dispatch('addKeep', this.newKeep);
                 // this.$store.dispatch('addKeeptoVault', this.$route.params.vaultId)
+            },
+            scroll () {
+            var prevScrollpos = window.pageYOffset;
+            window.onscroll = function () {
+                var currentScrollPos = window.pageYOffset;
+                if (prevScrollpos > currentScrollPos) {
+                    document.getElementById("create-keep-bar").style.top = "0";
+                } else {
+                    document.getElementById("create-keep-bar").style.top = "-56px";
+                }
+                prevScrollpos = currentScrollPos;
             }
+        },
         }
     }
 </script>

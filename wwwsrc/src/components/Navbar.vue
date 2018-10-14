@@ -51,17 +51,8 @@
         // components: {
         //     Navbar,
         // },
-        mounted: function () {
-            var prevScrollpos = window.pageYOffset;
-            window.onscroll = function () {
-                var currentScrollPos = window.pageYOffset;
-                if (prevScrollpos > currentScrollPos) {
-                    document.getElementById("navbar").style.top = "0";
-                } else {
-                    document.getElementById("navbar").style.top = "-56px";
-                }
-                prevScrollpos = currentScrollPos;
-            }
+        mounted() {
+            this.scroll();
         },
         methods: {
             logout() {
@@ -95,7 +86,19 @@
                     name: "",
                     description: ""
                 };
-            }
+            },
+            scroll() {
+                var prevScrollpos = window.pageYOffset;
+                window.onscroll = function () {
+                    var currentScrollPos = window.pageYOffset;
+                    if (prevScrollpos > currentScrollPos) {
+                        document.getElementById("navbar").style.top = "0";
+                    } else {
+                        document.getElementById("navbar").style.top = "-56px";
+                    }
+                    prevScrollpos = currentScrollPos;
+                }
+            },
         }
     }
 </script>
@@ -121,6 +124,7 @@
         font-size: 3vw !important;
         letter-spacing: 10px;
     }
+
     .name-head:hover {
         background-color: #333;
         color: white;

@@ -1,7 +1,11 @@
 <template>
-    <div id="vaults-row" class="row justify-content-center">
-        
-            <!-- <navbar></navbar> -->
+    <div>
+        <div class="row">
+            <div class="col title">
+                <span>MY VAULTS</span>
+            </div>
+        </div>
+        <div id="vaults-row" class="row justify-content-center">
             <div id="my-vaults" v-for="vault in myVaults" :key="vault._id">
                 <router-link class="card" :to="{name: 'vault', params: {vaultId: vault.id}}">
                     <img src="https://loremflickr.com/200/250/cars" alt="">
@@ -9,7 +13,7 @@
                     <h5>{{vault.description}}</h5>
                 </router-link>
             </div>
-        
+        </div>
     </div>
 </template>
 
@@ -42,15 +46,22 @@
 </script>
 
 <style scoped>
-    #vaults-row {
+    .title {
+        font-size: 3vw;
         margin-top: 60px;
+        margin-bottom: 10px;
     }
+    /* #vaults-row {
+        margin-top: 60px;
+    } */
+
     a:hover {
         text-decoration: none;
         color: red;
     }
+
     img:hover {
+        z-index: 2;
         transform: scale(1.05);
     }
-    
 </style>

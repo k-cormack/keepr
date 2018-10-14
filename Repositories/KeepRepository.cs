@@ -76,6 +76,19 @@ namespace keepr.Repositories
             WHERE (vaultId = @vaultId)  
             ", new {vaultId});
         }
+        //DELETE KEEP BY VAULT ID
+        public string DeleteVaultKeep(VaultKeep vaultKeep)
+        {
+            int success = _db.Execute(@"
+            DELETE FROM vaultkeeps
+            WHERE vaultId = @vaultKeep.vaultId
+            AND keepID = @vaultKeep.keepId
+            ", vaultKeep);
+            if(success == 1){
+            return "Keep Deleted from Vault";
+            }
+            return "Delete Failed";
+        }
 
     }
 }

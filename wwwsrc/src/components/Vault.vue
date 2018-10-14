@@ -54,10 +54,10 @@
             },
         },
         methods: {
-            // addKeep() {
-            //     this.$store.dispatch('addKeep', this.newKeep);
-            //     // this.$store.dispatch('addKeeptoVault', this.$route.params.vaultId)
-            // }
+            addKeep() {
+                this.$store.dispatch('addKeep', this.newKeep);
+                // this.$store.dispatch('addKeeptoVault', this.$route.params.vaultId)
+            }
         },
         components: {
             Navbar,
@@ -75,4 +75,5 @@
     #keeps {
         margin-top: 120px;
     }
+   
 </style>

@@ -10,13 +10,13 @@ namespace keepr.Models
         
         public string VaultId { get; set; }
 
-        public string KeepId { get; set; }
+        public int KeepId { get; set; }
         
         public string UserId { get; set; }
 
         public VaultKeep() { }
 
-        public VaultKeep(string vaultId, string keepId, string userId)
+        public VaultKeep(string vaultId, int keepId, string userId)
         {
             VaultId = vaultId;
             KeepId = keepId;
