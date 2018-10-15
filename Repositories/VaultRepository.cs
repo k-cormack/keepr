@@ -55,10 +55,10 @@ namespace keepr.Repositories
             return vault;
         }
         //DELETE VAULT
-        public Vault DeleteVault(Vault vault)
+        public string DeleteVault(int Id)
         {
-            _db.Execute("DELETE FROM vaults WHERE id = @Id", vault);
-        return vault;
+            _db.Execute("DELETE FROM vaults WHERE id = @Id", new {Id});
+            return "DELETED";
         }
 
         // public IEnumerable<Vault> GetVaultsByUserId(string id)

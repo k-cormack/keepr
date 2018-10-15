@@ -64,7 +64,7 @@ namespace keepr.Repositories
         //DELETE KEEP
         public Keep Delete(Keep keep)
         {
-            _db.Execute("DELETE FROM keeps WHERE id = @Id", keep);
+            _db.Execute("DELETE FROM keeps WHERE id = @Id", new{keep});
             return keep;
         }
         //GET KEEPS BY VAULT ID

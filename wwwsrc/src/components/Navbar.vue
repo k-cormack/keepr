@@ -60,7 +60,9 @@
                 this.$store.dispatch('logout')
             },
             getVaults() {
-                this.$store.dispatch('getMyVaults')
+                let userId = this.$store.state.user.id;
+                this.$store.dispatch('getMyVaults', userId);
+                
             },
             createVault() {
                 var modal = document.getElementById('createModal');
@@ -77,16 +79,21 @@
                     }
                 };
             },
-            addVault() {
-                this.$store.dispatch("addVault", this.newVault);
+            addVault(event) {
+                this.$store.dispatch("addVault", {
+                    name: this.newVault.name,
+                    description: this.newVault.description,
+                    userId: this.$store.state.user.id,
+                });
                 var form = document.getElementById("form");
                 var button = document.getElementById("create-button");
-                form.reset();
+                // form.reset();
+                this.newVault = {
+                    name: '',
+                    description: ''
+                }
                 var modal = document.getElementById('createModal').style.display = "none";
-                this.addVault = {
-                    name: "",
-                    description: ""
-                };
+                
             },
             scroll() {
                 var prevScrollpos = window.pageYOffset;

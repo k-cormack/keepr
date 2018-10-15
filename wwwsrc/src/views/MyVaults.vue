@@ -11,6 +11,7 @@
                     <img src="https://loremflickr.com/200/250/cars" alt="">
                     <h3>{{vault.name}}</h3>
                     <h5>{{vault.description}}</h5>
+                    <h5 id="vault-id">{{vault.id}}</h5>
                     <button id="delete-vault-button" type="submit" @click.prevent="deleteVault">DELETE VAULT</button>
                 </router-link>
             </div>
@@ -36,8 +37,8 @@
         },
         mounted() {
             this.$store.dispatch("authenticate");
-            let userId = this.$store.state.user.id;
-            this.$store.dispatch("getMyVaults", userId);
+            // let userId = this.$store.state.user.id;
+            // this.$store.dispatch("getMyVaults", userId);
         },
         computed: {
             myVaults() {
@@ -46,9 +47,13 @@
         },
         methods: {
             deleteVault() {
-                this.$store.dispatch('deleteVault', this.vaultData)
+                let x = document.getElementById('vault-id').innerHTML;
+                let vaultId = parseInt(x);
+                let userId = this.$store.state.user.id;
+                this.$store.dispatch('deleteVault', {vaultId, userId});
             }
         },
+        
 
 
     }

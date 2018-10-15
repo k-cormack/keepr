@@ -18,6 +18,9 @@
           name: "login"
         });
       }
+      let userId = this.$store.state.user.id;
+      this.$store.dispatch("getMyVaults", userId);
+
     },
     components: {
       Navbar,

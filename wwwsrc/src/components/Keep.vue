@@ -5,10 +5,10 @@
             <div class="card-body">
                 <h3>{{keepData.name}}</h3>
                 <p>{{keepData.description}}</p>
-                <button id="remove-button" type="submit" @click.prevent='removeFromVault'>DELETE FROM VAULT</button>
+                <!-- <button id="remove-button" type="submit" @click.prevent='removeFromVault'>DELETE FROM VAULT</button> -->
             </div>
         </div>
-        <div id="imgModal" class="modal">
+        <div id="img-modal" class="modal">
             <div class="modal-content">
                 <span class="modal-close">&times;</span>
 
@@ -31,14 +31,14 @@
                 }
         },
         mounted() {
-            this.checkLogin()
+            // this.checkLogin()
         },
         computed: {
 
         },
         methods: {
             imgModal() {
-                var modal = document.getElementById('imgModal');
+                var modal = document.getElementById('img-modal');
                 var span = document.getElementsByClassName("modal-close")[0];
                 modal.style.display = "block";
                 span.onclick = function () {

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex, { Store } from 'vuex'
 import Axios from 'axios'
 import router from './router'
 
@@ -113,10 +113,10 @@ export default new Vuex.Store({
         dispatch('getMyVaults', newVault.userId)
       })
     },
-    deleteVault({ commit, dispatch }, vaultData) {
-      api.delete('vaults/' + vaultData.id)
+    deleteVault({ commit, dispatch }, {vaultId, userId}) {
+      api.delete('vaults/' + vaultId)
       .then(res=> {
-        dispatch('getMyVaults')
+        dispatch('getMyVaults', userId)
       })
     },
     getVaultKeeps({ commit, dispatch}, vaultId) {

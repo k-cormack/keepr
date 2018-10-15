@@ -15,10 +15,11 @@
         </div> -->
 
         <div id="keeps" class="row justify-content-center">
-
+            
             <Keep v-for="keep in vaultKeeps" :keepData='keep' :key="keep.id" />
-
+            
         </div>
+        <!-- <span>{{vaultData.name}}</span> -->
 
 
     </div>
@@ -59,6 +60,8 @@
                 // this.$store.dispatch('addKeeptoVault', this.$route.params.vaultId)
             }
         },
+        props: ["vaultData"],
+
         components: {
             Navbar,
             Keep,
