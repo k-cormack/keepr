@@ -54,7 +54,7 @@ export default new Vuex.Store({
     register({ commit, dispatch }, newUser) {
       auth.post('register', newUser)
         .then(res => {
-          commit('setUser', res.data)
+          commit('setUser', res.data),
           router.push({ name: 'home' })
         })
         .catch(e => {
@@ -65,7 +65,7 @@ export default new Vuex.Store({
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
-          // router.push({ name: 'home' })
+          dispatch('getMyVaults', res.data.id)
         })
         .catch(e => {
           console.log('not authenticated')
@@ -94,8 +94,8 @@ export default new Vuex.Store({
         router.push({ name: 'browseVaults'})
       })
     },
-    getMyVaults({ commit, dispatch }) {
-      api.get('vaults')
+    getMyVaults({ commit, dispatch }, userId) {
+      api.get('vaults/myvaults/' + userId)
       .then(res=> {
         commit('setMyVaults', res.data)
         router.push({ name: "home" })
@@ -109,6 +109,12 @@ export default new Vuex.Store({
     },
     addVault({ commit, dispatch }, newVault) {
       api.post('vaults', newVault)
+      .then(res=> {
+        dispatch('getMyVaults', newVault.userId)
+      })
+    },
+    deleteVault({ commit, dispatch }, vaultData) {
+      api.delete('vaults/' + vaultData.id)
       .then(res=> {
         dispatch('getMyVaults')
       })

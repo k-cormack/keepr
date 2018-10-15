@@ -45,6 +45,7 @@
                 newVault: {
                     name: "",
                     description: "",
+                    userId: this.$store.state.user.id,
                 }
             };
         },

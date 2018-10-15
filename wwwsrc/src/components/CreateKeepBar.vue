@@ -9,7 +9,7 @@
             <div class="col-2 nav-buttons" @click.prevent="keepModal">
                 CREATE KEEP
             </div>
-            <div class="col-2 nav-buttons" @click.prevent="getVaults">
+            <div class="col-2 nav-buttons" @click.prevent="getMyVaults">
                 MY VAULTS
             </div>
             <div class="col-2 nav-buttons" @click.prevent="logout">
@@ -63,8 +63,9 @@
             logout() {
                 this.$store.dispatch('logout')
             },
-            getVaults() {
-                this.$store.dispatch('getMyVaults')
+            getMyVaults() {
+                let userId = this.$store.state.user.id;
+                this.$store.dispatch('getMyVaults', userId);
             },
             keepModal() {
                 var modal = document.getElementById('keepModal');

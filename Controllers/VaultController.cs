@@ -26,7 +26,12 @@ namespace keepr.Controllers
         [HttpGet("{vaultId}")]
         public Vault GetVaultById(int vaultId)
         {
-            return _repo.GetById(vaultId);
+            return _repo.GetVaultById(vaultId);
+        }
+        [HttpGet("myvaults/{userId}")]
+        public IEnumerable<Vault> GetMyVaults(string userId)
+        {
+            return _repo.GetMyVaults(userId);
         }
 
         [Authorize]
@@ -40,6 +45,11 @@ namespace keepr.Controllers
                 return _repo.Create(vault);
             }
             throw new Exception("INVALID VAULT");
+        }
+        [HttpDelete("{id}")]
+        public void DeleteVault(Vault vault)
+        {
+            _repo.DeleteVault(vault);
         }
 
     }
