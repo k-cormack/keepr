@@ -14,6 +14,8 @@ import BrowseVaults from './views/MyVaults.vue'
 import CreateKeepBar from './components/CreateKeepBar.vue'
 // @ts-ignore
 import Keep from './components/Keep.vue'
+// @ts-ignore
+import AllKeeps from './components/AllKeeps.vue'
 
 
 Vue.use(Router)
@@ -31,8 +33,8 @@ export default new Router({
     },
     {
       path: '/browse',
-      name: 'browseVaults',
-      component: BrowseVaults
+      name: 'AllKeeps',
+      component: AllKeeps
     },
     {
       path: '/vaults/:vaultId',
@@ -44,6 +46,7 @@ export default new Router({
       name: 'vaultKeeps',
       component: Keep
     },
+    
     
     // {
     //   path: '/vaults',

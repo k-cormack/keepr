@@ -33,8 +33,8 @@ namespace keepr.Repositories
         public Keep Create(Keep keep)
         {
             int id = _db.ExecuteScalar<int>(@"
-            INSERT INTO keeps (name, description, img)
-            VALUES (@Name, @Description, @Img);
+            INSERT INTO keeps (name, description, img, userId)
+            VALUES (@Name, @Description, @Img, @UserId);
             SELECT LAST_INSERT_ID();", keep
             );
             keep.Id = id;
@@ -81,8 +81,8 @@ namespace keepr.Repositories
         {
             int success = _db.Execute(@"
             DELETE FROM vaultkeeps
-            WHERE vaultId = @vaultKeep.vaultId
-            AND keepID = @vaultKeep.keepId
+            WHERE vaultId = @vaultId
+            AND keepId = @keepId
             ", vaultKeep);
             if(success == 1){
             return "Keep Deleted from Vault";

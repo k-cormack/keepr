@@ -55,11 +55,12 @@ namespace keepr.Controllers
             vaultKeep.UserId = HttpContext.User.Identity.Name;
             return _repo.AddVaultKeep(vaultKeep);
         }
-        [HttpDelete("vaultkeeps")]
-        public string DeleteVaultKeep([FromBody]VaultKeep vaultKeep)
+        //DELETE KEEP FROM VAULT(BUT NOT FROM KEEP DATABASE)
+        [HttpPut("vaultkeeps")]
+        public string DeleteVaultKeep([FromBody]VaultKeep vaultKeepData)
         {
-            vaultKeep.UserId = HttpContext.User.Identity.Name;
-            return _repo.DeleteVaultKeep(vaultKeep);
+            vaultKeepData.UserId = HttpContext.User.Identity.Name;
+            return _repo.DeleteVaultKeep(vaultKeepData);
         }
 
     }

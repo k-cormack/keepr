@@ -1,14 +1,23 @@
 <template>
     <div>
         <div class="card">
-            <img class="card-img-top img-responsive" @click.prevent='imgModal' :src="keepData.img" alt="" />
+            <img class="card-img-top img-responsive" @click='imgModal' :src="keepData.img" alt="" />
             <div class="card-body">
                 <h3>{{keepData.name}}</h3>
                 <p>{{keepData.description}}</p>
-                <!-- <button id="remove-button" type="submit" @click.prevent='removeFromVault'>DELETE FROM VAULT</button> -->
+                <button id="remove-button" type="submit" class="dropbtn" v-if="user.id" @click.prevent='removeFromVault'>Remove From Vault</button>
+                <div class="dropdown" v-if="user.id">
+                    <button @click="dropdown" class="dropbtn">Add to Vault</button>
+                    <div :id="keepData.id" class="dropdown-content">
+                        <a v-for="vault in myVaults" :vaultData="vault" :key="vault.id" @click='addToVault(vault)'>{{vault.name}}</a>
+                        <!-- <a href="#about">About</a>
+                        <a href="#contact">Contact</a> -->
+                    </div>
+                </div>
             </div>
+
         </div>
-        <div id="img-modal" class="modal">
+        <div :id="keepData.id" class="modal">
             <div class="modal-content">
                 <span class="modal-close">&times;</span>
 
@@ -19,6 +28,7 @@
             </div>
         </div>
     </div>
+    </div>
 
 </template>
 
@@ -27,18 +37,27 @@
         name: "keep",
         data: function () {
             return {
-                
-                }
+
+            }
         },
         mounted() {
-            // this.checkLogin()
+            if (this.$store.state.myVaults.length == 0) {
+                let userId = this.$store.state.user.id;
+                this.$store.dispatch('getMyVaultsForAdd', userId)
+            }
+            //this.checkLogin()
         },
         computed: {
-
+            user() {
+                return this.$store.state.user;
+            },
+            myVaults() {
+                return this.$store.state.myVaults;
+            }
         },
         methods: {
             imgModal() {
-                var modal = document.getElementById('img-modal');
+                var modal = document.getElementById(this.keepData.id);
                 var span = document.getElementsByClassName("modal-close")[0];
                 modal.style.display = "block";
                 span.onclick = function () {
@@ -53,12 +72,12 @@
             },
             checkLogin() {
                 // id = this.$store.user.id;
-                var showButton = document.getElementById("remove-button");
-                    if (this.$store.state.user.id) {
-                        showButton.style.display = "block";
-                    } else {
-                        showButton.style.display = "none";
-                    }
+                // var showButton = document.getElementById("remove-button");
+                //     if (this.$store.state.user.id) {
+                //         showButton.style.display = "block";
+                //     } else {
+                //         showButton.style.display = "none";
+                //     }
             },
             setVaultKeepData() {
                 this.$store.dispatch('setVaultKeepData', vaultKeepData)
@@ -66,10 +85,34 @@
             removeFromVault() {
                 let vaultKeepData = {
                     vaultId: this.$route.params.vaultId,
-                    keepId: this.keepData.id, 
+                    keepId: this.keepData.id,
                 }
                 this.$store.dispatch('removeFromVault', vaultKeepData);
-            }
+            },
+            addToVault(vault) {
+                let vaultKeepData = {
+                    vaultId: vault.id,
+                    keepId: this.keepData.id,
+                    userId: this.$store.state.user.id,
+                }
+                this.$store.dispatch('addKeepToVaultKeeps', vaultKeepData)
+            },
+            dropdown() {
+                document.getElementById(this.keepData.id).classList.toggle("show");
+                window.onclick = function (event) {
+                    if (!event.target.matches('.dropbtn')) {
+    
+                        var dropdowns = document.getElementsByClassName("dropdown-content");
+                        var i;
+                        for (i = 0; i < dropdowns.length; i++) {
+                            var openDropdown = dropdowns[i];
+                            if (openDropdown.classList.contains('show')) {
+                                openDropdown.classList.remove('show');
+                            }
+                        }
+                    }
+                }
+            },
         },
         props: ["keepData"],
 
@@ -188,5 +231,55 @@
         .modal-content {
             width: 100%;
         }
+    }
+
+
+
+
+
+
+    .dropbtn {
+        background-color: #3498DB;
+        color: white;
+        margin: 5px;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropbtn:hover,
+    .dropbtn:focus {
+        background-color: #2980B9;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown a:hover {
+        background-color: #ddd;
+    }
+
+    .show {
+        display: block;
     }
 </style>

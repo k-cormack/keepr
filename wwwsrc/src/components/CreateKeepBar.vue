@@ -2,17 +2,20 @@
     <div>
         <div class="row" id="create-keep-bar">
 
-            <div class="col-4 name-head">
+            <div class="col-3 name-head">
                 KEEPR
             </div>
             <div class="col-2"></div>
+            <div class="col-2 nav-buttons" @click.prevent="viewAllKeeps">
+                ALL KEEPS
+            </div>
             <div class="col-2 nav-buttons" @click.prevent="keepModal">
                 CREATE KEEP
             </div>
             <div class="col-2 nav-buttons" @click.prevent="getMyVaults">
                 MY VAULTS
             </div>
-            <div class="col-2 nav-buttons" @click.prevent="logout">
+            <div class="col-1 nav-buttons" @click.prevent="logout">
                 LOGOUT
             </div>
         </div>
@@ -63,6 +66,9 @@
             logout() {
                 this.$store.dispatch('logout')
             },
+            viewAllKeeps(){
+                this.$store.dispatch('viewAllKeeps');
+            },
             getMyVaults() {
                 let userId = this.$store.state.user.id;
                 this.$store.dispatch('getMyVaults', userId);
@@ -81,37 +87,30 @@
                         modal.style.display = "none";
                     }
                 };
-                button.onclick = function(){
+                button.onclick = function () {
                     modal.style.display = "none";
                 }
             },
-            // addVault() {
-            //     this.$store.dispatch("addVault", this.newVault);
-            //     var form = document.getElementById("form");
-            //     var button = document.getElementById("create-button");
-            //     form.reset();
-            //     var modal = document.getElementById('createModal').style.display = "none";
-            //     this.addVault = {
-            //         name: "",
-            //         description: ""
-            //     };
-            // },
             addKeep() {
                 this.$store.dispatch('addKeep', this.newKeep);
-                // this.$store.dispatch('addKeeptoVault', this.$route.params.vaultId)
-            },
-            scroll () {
-            var prevScrollpos = window.pageYOffset;
-            window.onscroll = function () {
-                var currentScrollPos = window.pageYOffset;
-                if (prevScrollpos > currentScrollPos) {
-                    document.getElementById("create-keep-bar").style.top = "0";
-                } else {
-                    document.getElementById("create-keep-bar").style.top = "-56px";
+                this.newKeep = {
+                    name: '',
+                    description: '',
+                    img: '',
                 }
-                prevScrollpos = currentScrollPos;
-            }
-        },
+            },
+            scroll() {
+                var prevScrollpos = window.pageYOffset;
+                window.onscroll = function () {
+                    var currentScrollPos = window.pageYOffset;
+                    if (prevScrollpos > currentScrollPos) {
+                        document.getElementById("create-keep-bar").style.top = "0";
+                    } else {
+                        document.getElementById("create-keep-bar").style.top = "-56px";
+                    }
+                    prevScrollpos = currentScrollPos;
+                }
+            },
         }
     }
 </script>

@@ -1,17 +1,20 @@
 <template>
     <div>
         <div class="row" id="navbar">
-            <div class="col-4 name-head">
+            <div class="col-3 name-head">
                 KEEPR
             </div>
             <div class="col-2"></div>
             <div class="col-2 nav-buttons" @click.prevent="createVault">
                 CREATE VAULT
             </div>
+            <div class="col-2 nav-buttons" @click.prevent="viewAllKeeps">
+                ALL KEEPS
+            </div>
             <div class="col-2 nav-buttons" @click.prevent="getVaults">
                 MY VAULTS
             </div>
-            <div class="col-2 nav-buttons" @click.prevent="logout">
+            <div class="col-1 nav-buttons" @click.prevent="logout">
                 LOGOUT
             </div>
         </div>
@@ -57,12 +60,15 @@
         },
         methods: {
             logout() {
-                this.$store.dispatch('logout')
+                this.$store.dispatch('logout');
+            },
+            viewAllKeeps(){
+                this.$store.dispatch('viewAllKeeps');
             },
             getVaults() {
                 let userId = this.$store.state.user.id;
                 this.$store.dispatch('getMyVaults', userId);
-                
+
             },
             createVault() {
                 var modal = document.getElementById('createModal');
@@ -93,7 +99,7 @@
                     description: ''
                 }
                 var modal = document.getElementById('createModal').style.display = "none";
-                
+
             },
             scroll() {
                 var prevScrollpos = window.pageYOffset;

@@ -43,6 +43,8 @@
             }
         },
         mounted() {
+            this.$store.dispatch("authenticateInVault");
+
             this.$store.dispatch('getVault', this.$route.params.vaultId);
             this.$store.dispatch('getVaultKeeps', this.$route.params.vaultId)
         },

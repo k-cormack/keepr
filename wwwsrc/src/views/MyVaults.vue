@@ -11,8 +11,7 @@
                     <img src="https://loremflickr.com/200/250/cars" alt="">
                     <h3>{{vault.name}}</h3>
                     <h5>{{vault.description}}</h5>
-                    <h5 id="vault-id">{{vault.id}}</h5>
-                    <button id="delete-vault-button" type="submit" @click.prevent="deleteVault">DELETE VAULT</button>
+                    <button id="delete-vault-button" type="submit" @click="deleteVault(vault.id)">DELETE VAULT</button>
                 </router-link>
             </div>
         </div>
@@ -46,9 +45,7 @@
             }
         },
         methods: {
-            deleteVault() {
-                let x = document.getElementById('vault-id').innerHTML;
-                let vaultId = parseInt(x);
+            deleteVault(vaultId) {
                 let userId = this.$store.state.user.id;
                 this.$store.dispatch('deleteVault', {vaultId, userId});
             }
