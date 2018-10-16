@@ -27,6 +27,7 @@ export default new Vuex.Store({
     vaultKeeps: [],
     vaultKeepsDict:{},
     vaultKeepData: {},
+    dropdownId: {},
   },
   mutations: {
     logout(state){
@@ -35,7 +36,8 @@ export default new Vuex.Store({
       state.vaults = [],
       state.activeVault = {},
       state.vaultKeeps = [],
-      state.vaultKeepData = {}
+      state.vaultKeepData = {},
+      state.dropdownId = {}
     },
     setUser(state, user) {
       state.user = user
@@ -63,6 +65,9 @@ export default new Vuex.Store({
       {
         Vue.set(state.vaultKeepsDict, payload.vaultId, payload.keeps)
       }
+    },
+    setDropdownId(state, id) {
+      state.dropdownId = id
     }
   },
   actions: {
@@ -204,7 +209,10 @@ export default new Vuex.Store({
       .then(res=> {
         dispatch('getVaultKeeps', vaultKeepData.vaultId)
       })
-    }
+    },
+   setDropdownId({ commit }, id){
+     commit('setDropdownId', id)
+   }
 
   }
 })

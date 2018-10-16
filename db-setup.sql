@@ -67,4 +67,4 @@
 
 -- DROP TABLE keeps;
 
--- DELETE FROM keeps WHERE Id = 26;
+-- DELETE FROM keeps WHERE id = 46;

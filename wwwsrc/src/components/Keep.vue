@@ -33,16 +33,23 @@
 
 </template>
 
+
 <script>
+    import {
+        mixin as clickaway
+    } from 'vue-clickaway';
+
     export default {
+        mixins: [clickaway],
+        template: '<p v-on-clickaway="away">Click away</p>',
         name: "keep",
         data: function () {
             return {
-                
+
             }
         },
-        
-       
+
+
         mounted() {
             if (this.$store.state.myVaults.length == 0 && this.$store.state.user.id) {
                 let userId = this.$store.state.user.id;
@@ -58,57 +65,71 @@
             }
         },
         methods: {
-     
-        imgModal() {
-            var modal = document.getElementById(this.keepData.id + "-modal");
-            var span = document.getElementById(this.keepData.id + "-close");
-            modal.style.display = "block";
-            span.onclick = function () {
-                modal.style.display = "none";
 
-            };
-            window.onclick = function (event) {
-                if (event.target == modal) {
+            imgModal() {
+                var modal = document.getElementById(this.keepData.id + "-modal");
+                var span = document.getElementById(this.keepData.id + "-close");
+                modal.style.display = "block";
+                span.onclick = function () {
                     modal.style.display = "none";
+
+                };
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                };
+            },
+            setVaultKeepData() {
+                this.$store.dispatch('setVaultKeepData', vaultKeepData)
+            },
+            removeFromVault() {
+                let vaultKeepData = {
+                    vaultId: this.$route.params.vaultId,
+                    keepId: this.keepData.id,
                 }
-            };
+                this.$store.dispatch('removeFromVault', vaultKeepData);
+            },
+            addToVault(vault) {
+                let vaultKeepData = {
+                    vaultId: vault.id,
+                    keepId: this.keepData.id,
+                    userId: this.$store.state.user.id,
+                }
+                this.$store.dispatch('addKeepToVaultKeeps', vaultKeepData);
+                document.getElementById(this.keepData.id).classList.toggle("show");
+            },
+            dropdown() {
+                document.getElementById(this.keepData.id).classList.toggle("show");
+                // this.$store.dispatch('setDropdownId', this.keepData.id);
+                this.$store.state.dropdownId = this.keepData.id;
+
+                window.addEventListener('click', this.closeDropdown);
+
+
+                // window.onclick = function (event) {
+                //         if (!event.target.matches('.dropbtn')) {
+
+                //             var dropdowns = document.getElementsByClassName("dropdown-content");
+                //             var i;
+                //             for (i = 0; i < dropdowns.length; i++) {
+                //                 var openDropdown = dropdowns[i];
+                //                 if (openDropdown.classList.contains('show')) {
+                //                     openDropdown.classList.remove('show');
+                //                 }
+                //             }
+                //         }
+                //     }
+            },
+            closeDropdown() {
+                let id = this.$store.state.dropdownId;
+                if (!id == this.keepData.id) {
+                    document.getElementById(id).classList.toggle("show");
+                    // this.$store.state.dropdownId = {}
+                }
+            },
         },
-        setVaultKeepData() {
-            this.$store.dispatch('setVaultKeepData', vaultKeepData)
-        },
-        removeFromVault() {
-            let vaultKeepData = {
-                vaultId: this.$route.params.vaultId,
-                keepId: this.keepData.id,
-            }
-            this.$store.dispatch('removeFromVault', vaultKeepData);
-        },
-        addToVault(vault) {
-            let vaultKeepData = {
-                vaultId: vault.id,
-                keepId: this.keepData.id,
-                userId: this.$store.state.user.id,
-            }
-            this.$store.dispatch('addKeepToVaultKeeps', vaultKeepData)
-        },
-        dropdown() {
-            document.getElementById(this.keepData.id).classList.toggle("show");
-            // window.onclick = function (event) {
-            //         if (!event.target.matches('.dropbtn')) {
-    
-            //             var dropdowns = document.getElementsByClassName("dropdown-content");
-            //             var i;
-            //             for (i = 0; i < dropdowns.length; i++) {
-            //                 var openDropdown = dropdowns[i];
-            //                 if (openDropdown.classList.contains('show')) {
-            //                     openDropdown.classList.remove('show');
-            //                 }
-            //             }
-            //         }
-            //     }
-        },
-    },
-    props: ["keepData"],
+        props: ["keepData"],
 
         components: {
 
