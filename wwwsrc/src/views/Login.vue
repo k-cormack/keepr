@@ -19,12 +19,12 @@
                 <span class="close">&times;</span>
                 <p>Please Enter Your Email and Password</p>
                 <form v-if="loginForm" @submit.prevent="loginUser">
-                    <input type="email" v-model="creds.email" placeholder="email">
+                    <input type="email" v-model="creds.email" placeholder="email" autofocus>
                     <input type="password" v-model="creds.password" placeholder="password">
                     <button type="submit">Login</button>
                 </form>
                 <form v-else @submit.prevent="register">
-                    <input type="text" v-model="newUser.username" placeholder="name">
+                    <input type="text" v-model="newUser.username" placeholder="name" autofocus>
                     <input type="email" v-model="newUser.email" placeholder="email">
                     <input type="password" v-model="newUser.password" placeholder="password">
                     <button type="submit">Create Account</button>
@@ -77,7 +77,7 @@
         },
         mounted() {
             //checks for valid session
-            this.$store.dispatch("authenticate");
+            // this.$store.dispatch("authenticate");
             this.$store.dispatch("getKeeps");
             this.scroll();
         },

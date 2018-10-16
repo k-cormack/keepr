@@ -25,6 +25,7 @@ export default new Vuex.Store({
     myVaults: [],
     activeVault: {},
     vaultKeeps: [],
+    vaultKeepsDict:{},
     vaultKeepData: {},
   },
   mutations: {
@@ -56,6 +57,12 @@ export default new Vuex.Store({
     },
     setVaultKeepData(state, vaultKeepData) {
       state.vaultKeepData = vaultKeepData
+    },
+    setKeepsToDict(state, payload){
+      if(payload.keeps.length > 0)
+      {
+        Vue.set(state.vaultKeepsDict, payload.vaultId, payload.keeps)
+      }
     }
   },
   actions: {
@@ -69,7 +76,10 @@ export default new Vuex.Store({
           console.log('[registration failed] :', e)
         })
     },
-    authenticate({ commit, dispatch }) {
+    authenticate({ commit, dispatch, state }) {
+      if(state.user.id){
+        return
+      }
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
@@ -89,6 +99,7 @@ export default new Vuex.Store({
       auth.post('login', creds)
         .then(res => {
           commit('setUser', res.data)
+          dispatch('getMyVaults', res.data.id)
           router.push({ name: 'home' })
         })
         .catch(e => {
@@ -102,19 +113,28 @@ export default new Vuex.Store({
         router.push({ name: 'login'})
       })
     },
-    getVaults({ commit, dispatch }) {
-      api.get('vaults')
-      .then(res=> {
-        commit('setVaults', res.data)
-        router.push({ name: 'browseVaults'})
-      })
-    },
+    // getVaults({ commit, dispatch }) {
+    //   api.get('vaults')
+    //   .then(res=> {
+    //     commit('setVaults', res.data)
+    //     router.push({ name: 'browseVaults'})
+    //   })
+    // },
     getMyVaults({ commit, dispatch }, userId) {
       api.get('vaults/myvaults/' + userId)
       .then(res=> {
         commit('setMyVaults', res.data)
+        res.data.forEach(v => {
+          dispatch("addVaultKeepsToDict", v.id)
+        });
         router.push({ name: "home" })
       })
+    },
+    addVaultKeepsToDict({commit, dispatch}, vaultId){
+      api.get('keeps/vaultkeeps/' + vaultId)
+      .then(res=>{
+        commit("setKeepsToDict", {keeps: res.data, vaultId})
+      })      
     },
     getVault({ commit, dispatch }, vaultId) {
       api.get('vaults/' + vaultId)

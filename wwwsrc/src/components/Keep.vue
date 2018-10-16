@@ -5,9 +5,10 @@
             <div class="card-body">
                 <h3>{{keepData.name}}</h3>
                 <p>{{keepData.description}}</p>
-                <button id="remove-button" type="submit" class="dropbtn" v-if="user.id" @click.prevent='removeFromVault'>Remove From Vault</button>
+                <button id="remove-button" type="submit" class="keep-button" v-if="user.id" @click.prevent='removeFromVault'>Remove
+                    From Vault</button>
                 <div class="dropdown" v-if="user.id">
-                    <button @click="dropdown" class="dropbtn">Add to Vault</button>
+                    <button @click="dropdown" :class="keepData.id+'dropbtn'" class="keep-button">Add to Vault</button>
                     <div :id="keepData.id" class="dropdown-content">
                         <a v-for="vault in myVaults" :vaultData="vault" :key="vault.id" @click='addToVault(vault)'>{{vault.name}}</a>
                         <!-- <a href="#about">About</a>
@@ -17,9 +18,9 @@
             </div>
 
         </div>
-        <div :id="keepData.id" class="modal">
+        <div :id="keepData.id+'-modal'" class="modal">
             <div class="modal-content">
-                <span class="modal-close">&times;</span>
+                <span :id="keepData.id+'-close'" class="modal-close">&times;</span>
 
                 <img id="modal-image" :src="keepData.img" alt="" />
                 <div class="modal-body">
@@ -37,15 +38,16 @@
         name: "keep",
         data: function () {
             return {
-
+                
             }
         },
+        
+       
         mounted() {
-            if (this.$store.state.myVaults.length == 0) {
+            if (this.$store.state.myVaults.length == 0 && this.$store.state.user.id) {
                 let userId = this.$store.state.user.id;
                 this.$store.dispatch('getMyVaultsForAdd', userId)
             }
-            //this.checkLogin()
         },
         computed: {
             user() {
@@ -56,65 +58,57 @@
             }
         },
         methods: {
-            imgModal() {
-                var modal = document.getElementById(this.keepData.id);
-                var span = document.getElementsByClassName("modal-close")[0];
-                modal.style.display = "block";
-                span.onclick = function () {
-                    modal.style.display = "none";
+     
+        imgModal() {
+            var modal = document.getElementById(this.keepData.id + "-modal");
+            var span = document.getElementById(this.keepData.id + "-close");
+            modal.style.display = "block";
+            span.onclick = function () {
+                modal.style.display = "none";
 
-                };
-                window.onclick = function (event) {
-                    if (event.target == modal) {
-                        modal.style.display = "none";
-                    }
-                };
-            },
-            checkLogin() {
-                // id = this.$store.user.id;
-                // var showButton = document.getElementById("remove-button");
-                //     if (this.$store.state.user.id) {
-                //         showButton.style.display = "block";
-                //     } else {
-                //         showButton.style.display = "none";
-                //     }
-            },
-            setVaultKeepData() {
-                this.$store.dispatch('setVaultKeepData', vaultKeepData)
-            },
-            removeFromVault() {
-                let vaultKeepData = {
-                    vaultId: this.$route.params.vaultId,
-                    keepId: this.keepData.id,
+            };
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
                 }
-                this.$store.dispatch('removeFromVault', vaultKeepData);
-            },
-            addToVault(vault) {
-                let vaultKeepData = {
-                    vaultId: vault.id,
-                    keepId: this.keepData.id,
-                    userId: this.$store.state.user.id,
-                }
-                this.$store.dispatch('addKeepToVaultKeeps', vaultKeepData)
-            },
-            dropdown() {
-                document.getElementById(this.keepData.id).classList.toggle("show");
-                window.onclick = function (event) {
-                    if (!event.target.matches('.dropbtn')) {
-    
-                        var dropdowns = document.getElementsByClassName("dropdown-content");
-                        var i;
-                        for (i = 0; i < dropdowns.length; i++) {
-                            var openDropdown = dropdowns[i];
-                            if (openDropdown.classList.contains('show')) {
-                                openDropdown.classList.remove('show');
-                            }
-                        }
-                    }
-                }
-            },
+            };
         },
-        props: ["keepData"],
+        setVaultKeepData() {
+            this.$store.dispatch('setVaultKeepData', vaultKeepData)
+        },
+        removeFromVault() {
+            let vaultKeepData = {
+                vaultId: this.$route.params.vaultId,
+                keepId: this.keepData.id,
+            }
+            this.$store.dispatch('removeFromVault', vaultKeepData);
+        },
+        addToVault(vault) {
+            let vaultKeepData = {
+                vaultId: vault.id,
+                keepId: this.keepData.id,
+                userId: this.$store.state.user.id,
+            }
+            this.$store.dispatch('addKeepToVaultKeeps', vaultKeepData)
+        },
+        dropdown() {
+            document.getElementById(this.keepData.id).classList.toggle("show");
+            // window.onclick = function (event) {
+            //         if (!event.target.matches('.dropbtn')) {
+    
+            //             var dropdowns = document.getElementsByClassName("dropdown-content");
+            //             var i;
+            //             for (i = 0; i < dropdowns.length; i++) {
+            //                 var openDropdown = dropdowns[i];
+            //                 if (openDropdown.classList.contains('show')) {
+            //                     openDropdown.classList.remove('show');
+            //                 }
+            //             }
+            //         }
+            //     }
+        },
+    },
+    props: ["keepData"],
 
         components: {
 
@@ -123,22 +117,16 @@
 </script>
 
 <style>
-    /* .keep {
-        background-color: #8aae92;
-        min-height: 50vh;
-        margin: 10px;
-        padding-bottom: 10px;
-        border-radius: 10px;
-    } */
-
     .card {
         width: 20rem;
-        /* border: darkblue; */
-
     }
 
     .card:hover {
         color: red;
+    }
+
+    .card-image-top {
+        max-height: 20rem;
     }
 
     .card-img-top:hover {
@@ -188,7 +176,6 @@
         width: 80%;
         max-width: 700px;
         text-align: center;
-        /* color: #ccc; */
         padding: 10px 0;
         height: 50px;
     }
@@ -233,12 +220,7 @@
         }
     }
 
-
-
-
-
-
-    .dropbtn {
+    .keep-button {
         background-color: #3498DB;
         color: white;
         margin: 5px;
@@ -248,8 +230,8 @@
         cursor: pointer;
     }
 
-    .dropbtn:hover,
-    .dropbtn:focus {
+    .keep-button:hover,
+    .keep-button:focus {
         background-color: #2980B9;
     }
 

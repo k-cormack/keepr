@@ -19,23 +19,12 @@
                 LOGOUT
             </div>
         </div>
-
-        <!-- <div class="row keep-form">
-            <div class="col-12">
-                <form @submit.prevent="addKeep">
-                    <input class="newKeep1" type="text" placeholder="New Keep Name" v-model="newKeep.name" required>
-                    <input class="newKeep2" type="text" placeholder="Description" v-model="newKeep.description">
-                    <input class="newKeep3" type="text" placeholder="Img Url" v-model="newKeep.img">
-                    <button class="submit" type="submit">Create New Keep</button>
-                </form>
-            </div>
-        </div> -->
         <div id="keepModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <p>Create New Keep Here</p>
                 <form id="form" @submit.prevent="addKeep">
-                    <input type="text" placeholder="Name of Keep" v-model="newKeep.name" required>
+                    <input type="text" placeholder="Name of Keep" v-model="newKeep.name" required autofocus>
                     <input type="text" placeholder="Description" v-model="newKeep.description">
                     <input type="text" placeholder="Image address" v-model="newKeep.img" required>
                     <button id="create-button" type="submit">Create New Keep!</button>
@@ -162,8 +151,6 @@
         display: flex;
         justify-content: flex-end;
     }
-
-
     /* The Modal (background) */
     .modal {
         display: none;
@@ -187,7 +174,6 @@
         background-color: rgba(0, 0, 0, 0.4);
         /* Black w/ opacity */
     }
-
     /* Modal Content */
     .modal-content {
         background-color: #fefefe;
@@ -196,7 +182,6 @@
         border: 1px solid #888;
         width: 80%;
     }
-
     /* The Close Button */
     .close {
         color: #aaaaaa;

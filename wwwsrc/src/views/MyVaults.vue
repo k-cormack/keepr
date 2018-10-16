@@ -8,10 +8,11 @@
         <div id="vaults-row" class="row justify-content-center">
             <div id="my-vaults" v-for="vault in myVaults" :vaultData="vault" :key="vault._id">
                 <router-link class="card" :to="{name: 'vault', params: {vaultId: vault.id}}">
-                    <img src="https://loremflickr.com/200/250/cars" alt="">
+                    <img id="vault-image" :src="setImage(vault.id)" alt="">
                     <h3>{{vault.name}}</h3>
                     <h5>{{vault.description}}</h5>
-                    <button id="delete-vault-button" type="submit" @click="deleteVault(vault.id)">DELETE VAULT</button>
+                    <button id="delete-vault-button" type="submit" class="dropbtn" @click.prevent="deleteVault(vault.id)">DELETE
+                        VAULT</button>
                 </router-link>
             </div>
         </div>
@@ -47,10 +48,19 @@
         methods: {
             deleteVault(vaultId) {
                 let userId = this.$store.state.user.id;
-                this.$store.dispatch('deleteVault', {vaultId, userId});
+                this.$store.dispatch('deleteVault', {
+                    vaultId,
+                    userId
+                });
+            },
+            setImage(vaultId) {
+                let keeps = this.$store.state.vaultKeepsDict[vaultId] || []
+                if (keeps.length > 0) {
+                    return keeps[Math.floor(Math.random() * keeps.length)].img
+                }
             }
         },
-        
+
 
 
     }
@@ -62,9 +72,11 @@
         margin-top: 60px;
         margin-bottom: 10px;
     }
-    /* #vaults-row {
-        margin-top: 60px;
-    } */
+
+    #vault-image {
+
+        width: 20rem;
+    }
 
     a:hover {
         text-decoration: none;

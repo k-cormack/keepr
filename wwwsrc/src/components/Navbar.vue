@@ -31,7 +31,7 @@
                 <span class="close">&times;</span>
                 <p>Create new Vault here</p>
                 <form id="form" @submit.prevent="addVault">
-                    <input type="text" placeholder="Name of Vault" v-model="newVault.name" required>
+                    <input type="text" placeholder="Name of Vault" v-model="newVault.name" required autofocus>
                     <input type="text" placeholder="Description" v-model="newVault.description">
                     <button id="create-button" type="submit">Create New Vault</button>
                 </form>
@@ -52,9 +52,6 @@
                 }
             };
         },
-        // components: {
-        //     Navbar,
-        // },
         mounted() {
             this.scroll();
         },
@@ -68,7 +65,6 @@
             getVaults() {
                 let userId = this.$store.state.user.id;
                 this.$store.dispatch('getMyVaults', userId);
-
             },
             createVault() {
                 var modal = document.getElementById('createModal');
@@ -77,7 +73,6 @@
                 modal.style.display = "block";
                 span.onclick = function () {
                     modal.style.display = "none";
-
                 };
                 window.onclick = function (event) {
                     if (event.target == modal) {
@@ -93,7 +88,6 @@
                 });
                 var form = document.getElementById("form");
                 var button = document.getElementById("create-button");
-                // form.reset();
                 this.newVault = {
                     name: '',
                     description: ''
@@ -146,12 +140,10 @@
 
     .nav-buttons {
         display: flex;
-        /* align-content: flex-end; */
         text-align: center;
         text-decoration: none;
         font-size: 1.8vw;
         justify-content: center;
-        /* text-align: center; */
         align-items: center;
     }
 
@@ -159,8 +151,6 @@
         background-color: #333;
         color: white;
     }
-
-
     /* The Modal (background) */
     .modal {
         display: none;
