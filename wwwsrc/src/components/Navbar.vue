@@ -18,14 +18,6 @@
                 LOGOUT
             </div>
         </div>
-        <!-- <div class="row">
-            <form @submit.prevent="addKeep">
-                <input class="newKeep1" type="text" placeholder="New Keep Name" v-model="newKeep.name" required>
-                <input class="newKeep2" type="text" placeholder="Description" v-model="newKeep.description">
-                <input class="newKeep3" type="text" placeholder="Img Url" v-model="newKeep.img">
-                <button class="submit" type="submit">Create New Keep</button>
-            </form>
-        </div> -->
         <div id="createModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>

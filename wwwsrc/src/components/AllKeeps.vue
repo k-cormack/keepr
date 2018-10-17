@@ -1,26 +1,12 @@
 <template>
     <div class="vault">
         <Navbar></Navbar>
-        <!-- <CreateKeepBar></CreateKeepBar> -->
-        <!-- <div id="keeps">
-                <h3>{{vault.name}}</h3>
-                <h5>{{vault.description}}</h5>
-                <hr>
-                <form @submit.prevent="addKeep">
-                    <input class="newKeep1" type="text" placeholder="New Keep Name" v-model="newKeep.name" required>
-                    <input class="newKeep2" type="text" placeholder="Description" v-model="newKeep.description">
-                    <input class="newKeep3" type="text" placeholder="Img Url" v-model="newKeep.img">
-                    <button class="submit" type="submit">Create New Keep</button>
-                </form>
-            </div> -->
 
         <div id="keeps" class="row justify-content-center">
 
             <Keep v-for="keep in keeps" :keepData='keep' :key="keep.id" />
 
         </div>
-        <!-- <span>{{vaultData.name}}</span> -->
-
 
     </div>
 </template>
@@ -49,12 +35,7 @@
             keeps() {
                 return this.$store.state.keeps
             },
-            // vault() {
-            //     return this.$store.state.activeVault
-            // },
-            // vaultKeeps() {
-            //     return this.$store.state.vaultKeeps
-            // },
+         
         },
         methods: {
             closeDropdown() {
