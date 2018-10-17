@@ -9,7 +9,7 @@
                     From Vault</button>
                 <div class="dropdown" v-if="user.id">
                     <button @click="dropdown" :class="keepData.id+'dropbtn'" class="keep-button">Add to Vault</button>
-                    <div :id="keepData.id" class="dropdown-content">
+                    <div :id="keepData.id" class="dropdown-content" style="display: none">
                         <a v-for="vault in myVaults" :vaultData="vault" :key="vault.id" @click='addToVault(vault)'>{{vault.name}}</a>
                         <!-- <a href="#about">About</a>
                         <a href="#contact">Contact</a> -->
@@ -51,20 +51,17 @@
 
 
         mounted() {
-            if (this.$store.state.myVaults.length == 0 && this.$store.state.user.id) {
-                let userId = this.$store.state.user.id;
-                this.$store.dispatch('getMyVaultsForAdd', userId)
-            }
+            
         },
         computed: {
             user() {
                 return this.$store.state.user;
             },
-            myVaults() {
-                return this.$store.state.myVaults;
-            }
         },
         methods: {
+            myVaults() {
+                return this.$store.state.myVaults;
+            },
 
             imgModal() {
                 var modal = document.getElementById(this.keepData.id + "-modal");
@@ -100,35 +97,44 @@
                 document.getElementById(this.keepData.id).classList.toggle("show");
             },
             dropdown() {
-                document.getElementById(this.keepData.id).classList.toggle("show");
-                // this.$store.dispatch('setDropdownId', this.keepData.id);
-                this.$store.state.dropdownId = this.keepData.id;
-
-                window.addEventListener('click', this.closeDropdown);
-
-
-                // window.onclick = function (event) {
-                //         if (!event.target.matches('.dropbtn')) {
-
-                //             var dropdowns = document.getElementsByClassName("dropdown-content");
-                //             var i;
-                //             for (i = 0; i < dropdowns.length; i++) {
-                //                 var openDropdown = dropdowns[i];
-                //                 if (openDropdown.classList.contains('show')) {
-                //                     openDropdown.classList.remove('show');
-                //                 }
-                //             }
-                //         }
-                //     }
-            },
-            closeDropdown() {
-                let id = this.$store.state.dropdownId;
-                if (!id == this.keepData.id) {
-                    document.getElementById(id).classList.toggle("show");
-                    // this.$store.state.dropdownId = {}
+                var x = document.getElementById(this.keepData.id);
+                if (x.style.display == "none") {
+                    x.style.display = "block";
                 }
+                this.$store.state.dropdownId1 = this.keepData.id;
             },
+
+
+
+
+
+            // document.getElementById(this.keepData.id).classList.toggle("show");
+            // this.$store.dispatch('setDropdownId', this.keepData.id);
+
+            // window.addEventListener('click', this.closeDropdown);
+
+
+            // window.onclick = function (event) {
+            //         if (!event.target.matches('.dropbtn')) {
+
+            //             var dropdowns = document.getElementsByClassName("dropdown-content");
+            //             var i;
+            //             for (i = 0; i < dropdowns.length; i++) {
+            //                 var openDropdown = dropdowns[i];
+            //                 if (openDropdown.classList.contains('show')) {
+            //                     openDropdown.classList.remove('show');
+            //                 }
+            //             }
+            //         }
+            //     }
         },
+        // closeDropdown() {
+        //     let id = this.$store.state.dropdownId;
+        //     if (!id == this.keepData.id) {
+        //         document.getElementById(id).classList.toggle("show");
+        //         // this.$store.state.dropdownId = {}
+        //     }
+        // },
         props: ["keepData"],
 
         components: {
@@ -262,7 +268,7 @@
     }
 
     .dropdown-content {
-        display: none;
+        /* display: none; */
         position: absolute;
         background-color: #f1f1f1;
         min-width: 160px;

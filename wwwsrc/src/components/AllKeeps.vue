@@ -43,26 +43,59 @@
             }
         },
         mounted() {
+            if(this.$store.state.keeps.length == 0){
+                this.$store.dispatch('getKeeps');
+            }
             this.$store.dispatch("authenticateInVault");
-            this.$store.dispatch('getKeeps');
+            window.addEventListener('click', this.closeDropdown);
+            if (this.$store.state.myVaults.length == 0 && this.$store.state.user.id) {
+                let userId = this.$store.state.user.id;
+                this.$store.dispatch('getMyVaultsForAdd', userId)
+            }
+            
             // this.$store.dispatch('getVault', this.$route.params.vaultId);
             // this.$store.dispatch('getVaultKeeps', this.$route.params.vaultId)
         },
         computed: {
+            keeps() {
+                return this.$store.state.keeps
+            },
             // vault() {
             //     return this.$store.state.activeVault
             // },
             // vaultKeeps() {
             //     return this.$store.state.vaultKeeps
             // },
-            keeps() {
-                return this.$store.state.keeps
-            },
         },
         methods: {
-        
+            closeDropdown() {
+
+                let id1 = this.$store.state.dropdownId1;
+                let id2 = this.$store.state.dropdownId2;
+                if (id1 == 1) {
+                    let x = document.getElementById(id2);
+                    x.style.display = "none";
+                    this.$store.state.dropdownId1 = 1;
+
+                    // document.getElementById(id2).classList.toggle("show");
+                    // this.$store.state.dropdownId = {}
+                } else if (id2 != 0) {
+                    let x = document.getElementById(id2);
+                    x.style.display = "none";
+
+                }
+                this.$store.state.dropdownId2 = this.$store.state.dropdownId1;
+                this.$store.state.dropdownId1 = 1;
+
+            },
+            //             var x = document.getElementById(this.keepData.id);
+            //     if (id1.style.display === "block") {
+            //         x.style.display = "none";
+            //     } else {
+            //         x.style.display = "none";
+            //     }
+            // }
         },
-        // props: ["vaultData"],
 
         components: {
             Navbar,
