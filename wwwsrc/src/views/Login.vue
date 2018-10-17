@@ -35,23 +35,6 @@
                 </div>
             </div>
         </div>
-
-
-        <!-- <form v-if="loginForm" @submit.prevent="loginUser">
-            <input type="email" v-model="creds.email" placeholder="email">
-            <input type="password" v-model="creds.password" placeholder="password">
-            <button type="submit">Login</button>
-        </form>
-        <form v-else @submit.prevent="register">
-            <input type="text" v-model="newUser.username" placeholder="name">
-            <input type="email" v-model="newUser.email" placeholder="email">
-            <input type="password" v-model="newUser.password" placeholder="password">
-            <button type="submit">Create Account</button>
-        </form>
-        <div @click="loginForm = !loginForm">
-            <p v-if="loginForm">No account Click to Register</p>
-            <p v-else>Already have an account click to Login</p>
-        </div> -->
     </div>
 </template>
 
@@ -117,7 +100,7 @@
                 if (prevScrollpos > currentScrollPos) {
                     document.getElementById("navbar").style.top = "0";
                 } else {
-                    document.getElementById("navbar").style.top = "-56px";
+                    document.getElementById("navbar").style.top = "-62px";
                 }
                 prevScrollpos = currentScrollPos;
             }

@@ -95,7 +95,7 @@
                     if (prevScrollpos > currentScrollPos) {
                         document.getElementById("create-keep-bar").style.top = "0";
                     } else {
-                        document.getElementById("create-keep-bar").style.top = "-56px";
+                        document.getElementById("create-keep-bar").style.top = "-62px";
                     }
                     prevScrollpos = currentScrollPos;
                 }
@@ -113,7 +113,7 @@
         position: fixed;
         top: 0;
         min-height: 56px;
-        max-height: 100px;
+        max-height: 63px;
         width: 100%;
         transition: top 0.3s;
     }
