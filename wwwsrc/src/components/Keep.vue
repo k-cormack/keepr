@@ -57,11 +57,11 @@
             user() {
                 return this.$store.state.user;
             },
-        },
-        methods: {
             myVaults() {
                 return this.$store.state.myVaults;
             },
+        },
+        methods: {
 
             imgModal() {
                 var modal = document.getElementById(this.keepData.id + "-modal");

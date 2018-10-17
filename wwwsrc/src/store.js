@@ -27,7 +27,7 @@ export default new Vuex.Store({
     vaultKeeps: [],
     vaultKeepsDict:{},
     vaultKeepData: {},
-    dropdownId1: 1,
+    dropdownId1: 0,
     dropdownId2: 0,
   },
   mutations: {
@@ -37,7 +37,7 @@ export default new Vuex.Store({
       state.vaults = [],
       state.activeVault = {},
       state.vaultKeeps = [],
-      state.vaultKeepData = 1,
+      state.vaultKeepData = 0,
       state.dropdownId1 = 0
     },
     setUser(state, user) {
@@ -95,10 +95,14 @@ export default new Vuex.Store({
           console.log('not authenticated')
         })
     },
-    authenticateInVault({ commit, dispatch }) {
+    authenticateForVault({ commit, dispatch, state }) {
+      if(state.user.id){
+        return
+      }
       auth.get('authenticate')
       .then(res=> {
         commit('setUser', res.data)
+        dispatch('getMyVaultsForAdd', res.data.id)
       })
     },
     login({ commit, dispatch }, creds) {
