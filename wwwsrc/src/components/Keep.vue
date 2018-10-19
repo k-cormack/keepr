@@ -103,38 +103,7 @@
                 }
                 this.$store.state.dropdownId1 = this.keepData.id;
             },
-
-
-
-
-
-            // document.getElementById(this.keepData.id).classList.toggle("show");
-            // this.$store.dispatch('setDropdownId', this.keepData.id);
-
-            // window.addEventListener('click', this.closeDropdown);
-
-
-            // window.onclick = function (event) {
-            //         if (!event.target.matches('.dropbtn')) {
-
-            //             var dropdowns = document.getElementsByClassName("dropdown-content");
-            //             var i;
-            //             for (i = 0; i < dropdowns.length; i++) {
-            //                 var openDropdown = dropdowns[i];
-            //                 if (openDropdown.classList.contains('show')) {
-            //                     openDropdown.classList.remove('show');
-            //                 }
-            //             }
-            //         }
-            //     }
         },
-        // closeDropdown() {
-        //     let id = this.$store.state.dropdownId;
-        //     if (!id == this.keepData.id) {
-        //         document.getElementById(id).classList.toggle("show");
-        //         // this.$store.state.dropdownId = {}
-        //     }
-        // },
         props: ["keepData"],
 
         components: {
@@ -146,6 +115,10 @@
 <style>
     .card {
         width: 20rem;
+        height: 360px;
+    }
+    .card-body {
+        background: rgb(76, 209, 209);
     }
 
     .card:hover {
