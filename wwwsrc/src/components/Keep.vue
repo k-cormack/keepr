@@ -6,7 +6,7 @@
                 <h3>{{keepData.name}}</h3>
                 <p>{{keepData.description}}</p>
                 <button id="remove-button" type="submit" class="keep-button" v-if="user.id" @click.prevent='removeFromVault'>Remove
-                    From Vault</button>
+                    from Vault</button>
                 <div class="dropdown" v-if="user.id">
                     <button @click="dropdown" :class="keepData.id+'dropbtn'" class="keep-button">Add to Vault</button>
                     <div :id="keepData.id" class="dropdown-content" style="display: none">
@@ -16,7 +16,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <div :id="keepData.id+'-modal'" class="modal">
             <div class="modal-content">
@@ -51,7 +50,7 @@
 
 
         mounted() {
-            
+
         },
         computed: {
             user() {
@@ -112,11 +111,12 @@
     }
 </script>
 
-<style>
+<style scoped>
     .card {
         width: 20rem;
-        height: 360px;
+        height: auto;
     }
+
     .card-body {
         background: rgb(76, 209, 209);
     }
@@ -222,6 +222,7 @@
 
     .keep-button {
         background-color: #3498DB;
+        border-radius: 15px;
         color: white;
         margin: 5px;
         padding: 10px;

@@ -11,8 +11,10 @@
                     <img id="vault-image" :src="setImage(vault.id)" alt="">
                     <h3>{{vault.name}}</h3>
                     <h5>{{vault.description}}</h5>
-                    <button id="delete-vault-button" type="submit" class="dropbtn" @click.prevent="deleteVault(vault.id)">DELETE
-                        VAULT</button>
+                    <div>
+                        <button id="delete-vault-button" type="submit" class="dropbtn" @click.prevent="deleteVault(vault.id)">DELETE
+                            VAULT</button>
+                    </div>
                 </router-link>
             </div>
         </div>
@@ -67,6 +69,27 @@
 </script>
 
 <style scoped>
+    .card {
+        background-color: rgb(129, 233, 172)
+    }
+
+    button {
+        background-color: #3498DB;
+        width: 200px;
+        border-radius: 15px;
+        color: white;
+        margin: 5px;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover,
+    button:focus {
+        background-color: #2980B9;
+    }
+
     .title {
         font-size: 3vw;
         margin-top: 60px;

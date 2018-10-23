@@ -16,22 +16,23 @@
         </div>
         <div id="createModal" class="modal">
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>Please Enter Your Email and Password</p>
+                <span class="close" style="color: black">&times;</span>
                 <form v-if="loginForm" @submit.prevent="loginUser">
+                    <p>Please Enter Your Email and Password</p>
                     <input type="email" v-model="creds.email" placeholder="email" autofocus>
                     <input type="password" v-model="creds.password" placeholder="password">
                     <button type="submit">Login</button>
                 </form>
                 <form v-else @submit.prevent="register">
+                    <p>Please Enter Your Name, Email, and select a Password to create an Account</p>
                     <input type="text" v-model="newUser.username" placeholder="name" autofocus>
                     <input type="email" v-model="newUser.email" placeholder="email">
                     <input type="password" v-model="newUser.password" placeholder="password">
                     <button type="submit">Create Account</button>
                 </form>
                 <div @click="loginForm = !loginForm">
-                    <p v-if="loginForm">No account Click to Register</p>
-                    <p v-else>Already have an account click to Login</p>
+                    <p v-if="loginForm">No account? Click <u style="color: blue">HERE</u> to Register</p>
+                    <p v-else>Already have an account? Click <u style="color: blue">HERE</u> to Login</p>
                 </div>
             </div>
         </div>
@@ -64,7 +65,7 @@
             this.$store.dispatch("getKeeps");
             this.scroll();
         },
-        
+
 
         computed: {
             keeps() {
@@ -94,17 +95,17 @@
                 };
             },
             scroll() {
-            var prevScrollpos = window.pageYOffset;
-            window.onscroll = function () {
-                var currentScrollPos = window.pageYOffset;
-                if (prevScrollpos > currentScrollPos) {
-                    document.getElementById("navbar").style.top = "0";
-                } else {
-                    document.getElementById("navbar").style.top = "-62px";
+                var prevScrollpos = window.pageYOffset;
+                window.onscroll = function () {
+                    var currentScrollPos = window.pageYOffset;
+                    if (prevScrollpos > currentScrollPos) {
+                        document.getElementById("navbar").style.top = "0";
+                    } else {
+                        document.getElementById("navbar").style.top = "-62px";
+                    }
+                    prevScrollpos = currentScrollPos;
                 }
-                prevScrollpos = currentScrollPos;
-            }
-        },
+            },
         },
         components: {
             Keep,
@@ -182,7 +183,7 @@
 
     /* Modal Content */
     .modal-content {
-        background-color: #fefefe;
+        background-color: lightgray;
         margin: auto;
         padding: 20px;
         border: 1px solid #888;
@@ -203,7 +204,23 @@
         text-decoration: none;
         cursor: pointer;
     }
+
     #keeps {
         margin-top: 120px;
+    }
+    button {
+        background-color: #3498DB;
+        color: white;
+        margin: 5px;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+    }
+
+    button:hover,
+    button:focus {
+        background-color: #2980B9;
     }
 </style>

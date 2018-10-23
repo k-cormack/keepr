@@ -3,7 +3,7 @@
         <Navbar></Navbar>
 
         <div id="keeps" class="row justify-content-center">
-
+            
             <Keep v-for="keep in keeps" :keepData='keep' :key="keep.id" />
 
         </div>

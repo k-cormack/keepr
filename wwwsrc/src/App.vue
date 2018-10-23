@@ -16,6 +16,10 @@ html {
     font: 400 15px/1.8 "Lato", sans-serif;
     color: #777;
 } */
+body {
+  background-color: lightcyan;
+}
+
   #app {
     display: flex;
     font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -23,7 +27,7 @@ html {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    background: lightcyan;
+    
   }
 
   #nav {
