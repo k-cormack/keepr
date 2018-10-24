@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1.402-sdk
+FROM microsoft/dotnet:2.1-sdk
 WORKDIR /app
-COPY ..
+COPY . .
 CMD ASPNETCORE_URLS=http://*:$PORT dotnet keepr.dll
