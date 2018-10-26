@@ -22,6 +22,9 @@ Vue.use(Vuex)
 
 
 
+
+
+
 // OPTIONAL FANCY TERNARY:
 let production = !window.location.host.includes('localhost');
 let baseUrl = production ? '//cormack-keepr.herokuapp.com/' : '//localhost:3000/';
