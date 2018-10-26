@@ -1,18 +1,39 @@
 import Vue from 'vue'
-import Vuex, { Store } from 'vuex'
+import Vuex, {
+  Store
+} from 'vuex'
 import Axios from 'axios'
 import router from './router'
 
 Vue.use(Vuex)
 
+//ORIGINAL ROUTING - (should revove the 'https:' if re-implemented)
+// let auth = Axios.create({
+//   baseURL: "https://cormack-keepr.herokuapp.com/account/",
+//   timeout: 3000,
+//   withCredentials: true
+// })
+
+// let api = Axios.create({
+//   baseURL: "https://cormack-keepr.herokuapp.com/api/",
+//   timeout: 3000,
+//   withCredentials: true
+// })
+
+
+
+// OPTIONAL FANCY TERNARY:
+let production = !window.location.host.includes('localhost');
+let baseUrl = production ? '//cormack-keepr.herokuapp.com/' : '//localhost:3000/';
+
 let auth = Axios.create({
-  baseURL: "https://cormack-keepr.herokuapp.com/account/",
+  baseURL: baseUrl + "account/",
   timeout: 3000,
   withCredentials: true
 })
 
 let api = Axios.create({
-  baseURL: "https://cormack-keepr.herokuapp.com/api/",
+  baseURL: baseUrl + "api/",
   timeout: 3000,
   withCredentials: true
 })
@@ -25,20 +46,20 @@ export default new Vuex.Store({
     myVaults: [],
     activeVault: {},
     vaultKeeps: [],
-    vaultKeepsDict:{},
+    vaultKeepsDict: {},
     vaultKeepData: {},
     dropdownId1: 0,
     dropdownId2: 0,
   },
   mutations: {
-    logout(state){
+    logout(state) {
       state.myVaults = [],
-      state.user = {},
-      state.vaults = [],
-      state.activeVault = {},
-      state.vaultKeeps = [],
-      state.vaultKeepData = 0,
-      state.dropdownId1 = 0
+        state.user = {},
+        state.vaults = [],
+        state.activeVault = {},
+        state.vaultKeeps = [],
+        state.vaultKeepData = 0,
+        state.dropdownId1 = 0
     },
     setUser(state, user) {
       state.user = user
@@ -49,7 +70,7 @@ export default new Vuex.Store({
     setKeeps(state, data) {
       state.keeps = data
     },
-    setMyVaults(state, data){
+    setMyVaults(state, data) {
       state.myVaults = data
     },
     setVault(state, data) {
@@ -61,9 +82,8 @@ export default new Vuex.Store({
     setVaultKeepData(state, vaultKeepData) {
       state.vaultKeepData = vaultKeepData
     },
-    setKeepsToDict(state, payload){
-      if(payload.keeps.length > 0)
-      {
+    setKeepsToDict(state, payload) {
+      if (payload.keeps.length > 0) {
         Vue.set(state.vaultKeepsDict, payload.vaultId, payload.keeps)
       }
     },
@@ -72,18 +92,27 @@ export default new Vuex.Store({
     // }
   },
   actions: {
-    register({ commit, dispatch }, newUser) {
+    register({
+      commit,
+      dispatch
+    }, newUser) {
       auth.post('register', newUser)
         .then(res => {
           commit('setUser', res.data),
-          router.push({ name: 'home' })
+            router.push({
+              name: 'home'
+            })
         })
         .catch(e => {
           console.log('[registration failed] :', e)
         })
     },
-    authenticate({ commit, dispatch, state }) {
-      if(state.user.id){
+    authenticate({
+      commit,
+      dispatch,
+      state
+    }) {
+      if (state.user.id) {
         return
       }
       auth.get('authenticate')
@@ -95,33 +124,47 @@ export default new Vuex.Store({
           console.log('not authenticated')
         })
     },
-    authenticateForVault({ commit, dispatch, state }) {
-      if(state.user.id){
+    authenticateForVault({
+      commit,
+      dispatch,
+      state
+    }) {
+      if (state.user.id) {
         return
       }
       auth.get('authenticate')
-      .then(res=> {
-        commit('setUser', res.data)
-        dispatch('getMyVaultsForAdd', res.data.id)
-      })
+        .then(res => {
+          commit('setUser', res.data)
+          dispatch('getMyVaultsForAdd', res.data.id)
+        })
     },
-    login({ commit, dispatch }, creds) {
+    login({
+      commit,
+      dispatch
+    }, creds) {
       auth.post('login', creds)
         .then(res => {
           commit('setUser', res.data)
           dispatch('getMyVaults', res.data.id)
-          router.push({ name: 'home' })
+          router.push({
+            name: 'home'
+          })
         })
         .catch(e => {
           console.log('Login Failed')
         })
     },
-    logout({ commit, dispatch }) {
+    logout({
+      commit,
+      dispatch
+    }) {
       auth.delete('logout')
-      .then(res=> {
-        commit("logout")
-        router.push({ name: 'login'})
-      })
+        .then(res => {
+          commit("logout")
+          router.push({
+            name: 'login'
+          })
+        })
     },
     // getVaults({ commit, dispatch }) {
     //   api.get('vaults')
@@ -130,94 +173,142 @@ export default new Vuex.Store({
     //     router.push({ name: 'browseVaults'})
     //   })
     // },
-    getMyVaults({ commit, dispatch }, userId) {
+    getMyVaults({
+      commit,
+      dispatch
+    }, userId) {
       api.get('vaults/myvaults/' + userId)
-      .then(res=> {
-        commit('setMyVaults', res.data)
-        res.data.forEach(v => {
-          dispatch("addVaultKeepsToDict", v.id)
-        });
-        router.push({ name: "home" })
-      })
+        .then(res => {
+          commit('setMyVaults', res.data)
+          res.data.forEach(v => {
+            dispatch("addVaultKeepsToDict", v.id)
+          });
+          router.push({
+            name: "home"
+          })
+        })
     },
-    addVaultKeepsToDict({commit, dispatch}, vaultId){
+    addVaultKeepsToDict({
+      commit,
+      dispatch
+    }, vaultId) {
       api.get('keeps/vaultkeeps/' + vaultId)
-      .then(res=>{
-        commit("setKeepsToDict", {keeps: res.data, vaultId})
-      })      
+        .then(res => {
+          commit("setKeepsToDict", {
+            keeps: res.data,
+            vaultId
+          })
+        })
     },
-    getVault({ commit, dispatch }, vaultId) {
+    getVault({
+      commit,
+      dispatch
+    }, vaultId) {
       api.get('vaults/' + vaultId)
-      .then(res=> {
-        commit('setVault', res.data)
-      })
+        .then(res => {
+          commit('setVault', res.data)
+        })
     },
-    getMyVaultsForAdd({ commit, dispatch}, userId){
+    getMyVaultsForAdd({
+      commit,
+      dispatch
+    }, userId) {
       api.get('vaults/myvaults/' + userId)
-      .then(res=>{
-        commit('setMyVaults', res.data)
-      })
+        .then(res => {
+          commit('setMyVaults', res.data)
+        })
     },
-    addVault({ commit, dispatch }, newVault) {
+    addVault({
+      commit,
+      dispatch
+    }, newVault) {
       api.post('vaults', newVault)
-      .then(res=> {
-        dispatch('getMyVaults', newVault.userId)
-      })
+        .then(res => {
+          dispatch('getMyVaults', newVault.userId)
+        })
     },
-    deleteVault({ commit, dispatch }, {vaultId, userId}) {
+    deleteVault({
+      commit,
+      dispatch
+    }, {
+      vaultId,
+      userId
+    }) {
       api.delete('vaults/' + vaultId)
-      .then(res=> {
-        dispatch('getMyVaults', userId)
-      })
+        .then(res => {
+          dispatch('getMyVaults', userId)
+        })
     },
-    getVaultKeeps({ commit, dispatch}, vaultId) {
+    getVaultKeeps({
+      commit,
+      dispatch
+    }, vaultId) {
       api.get('keeps/vaultkeeps/' + vaultId)
-      .then(res=> {
-        commit('setVaultKeeps', res.data)
-      })
+        .then(res => {
+          commit('setVaultKeeps', res.data)
+        })
     },
-    addKeep({ commit, dispatch }, newKeep) {
+    addKeep({
+      commit,
+      dispatch
+    }, newKeep) {
       api.post('keeps', newKeep)
-      .then(res=> {
-        let vk = {
-          userId: newKeep.userId,
-          vaultId: newKeep.vaultId,
-          keepId: res.data.id,
-        }
-        dispatch('addKeepToVaultKeeps', vk)
-      })
+        .then(res => {
+          let vk = {
+            userId: newKeep.userId,
+            vaultId: newKeep.vaultId,
+            keepId: res.data.id,
+          }
+          dispatch('addKeepToVaultKeeps', vk)
+        })
     },
-    addKeepToVaultKeeps({ commit, dispatch }, vk) {
+    addKeepToVaultKeeps({
+      commit,
+      dispatch
+    }, vk) {
       api.post('keeps/vaultkeeps/', vk)
-      .then(res=> {
-        dispatch('getVaultKeeps', vk.vaultId)
-      })
+        .then(res => {
+          dispatch('getVaultKeeps', vk.vaultId)
+        })
     },
-    getKeeps({ commit, dispatch }) {
+    getKeeps({
+      commit,
+      dispatch
+    }) {
       api.get('keeps')
-      .then(res=> {
-        commit('setKeeps', res.data)
-      })
+        .then(res => {
+          commit('setKeeps', res.data)
+        })
     },
-    viewAllKeeps({ commit, dispatch}){
+    viewAllKeeps({
+      commit,
+      dispatch
+    }) {
       api.get('keeps')
-      .then(res=>{
-        commit('setKeeps', res.data)
-        router.push({name: 'AllKeeps'});
-      })
+        .then(res => {
+          commit('setKeeps', res.data)
+          router.push({
+            name: 'AllKeeps'
+          });
+        })
     },
-    setVaultKeepData({ commit }, vaultKeepData) {
+    setVaultKeepData({
+      commit
+    }, vaultKeepData) {
       commit('setVaultKeepData', vaultKeepData)
     },
-    removeFromVault({ commit, dispatch}, vaultKeepData) {
+    removeFromVault({
+      commit,
+      dispatch
+    }, vaultKeepData) {
       api.put('keeps/vaultkeeps/', vaultKeepData)
-      .then(res=> {
-        dispatch('getVaultKeeps', vaultKeepData.vaultId)
-      })
+        .then(res => {
+          dispatch('getVaultKeeps', vaultKeepData.vaultId)
+        })
     },
-  //  setDropdownId({ commit }, id){
-  //    commit('setDropdownId', id)
-  //  }
+    //  setDropdownId({ commit }, id){
+    //    commit('setDropdownId', id)
+    //  }
 
   }
 })
