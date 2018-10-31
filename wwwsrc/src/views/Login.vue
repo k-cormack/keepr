@@ -154,6 +154,7 @@
     .login:hover {
         background-color: #333;
         color: white;
+        cursor: pointer;
     }
 
 
