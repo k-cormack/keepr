@@ -137,6 +137,7 @@
         font-size: 1.8vw;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
     }
 
     .nav-buttons:hover {
