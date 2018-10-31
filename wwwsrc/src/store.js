@@ -27,7 +27,7 @@ Vue.use(Vuex)
 
 // OPTIONAL FANCY TERNARY:
 let production = !window.location.host.includes('localhost');
-let baseUrl = production ? '//cormack-keepr.herokuapp.com/' : '//localhost:3000/';
+let baseUrl = production ? '//cormack-keepr.herokuapp.com/' : '//localhost:5000/';
 
 let auth = Axios.create({
   baseURL: baseUrl + "account/",
